@@ -1,78 +1,3 @@
-"""
-Chunking + Tokenization + Embedding pipeline
-for the AI Incident RCA & Resolution Intelligence System.
-
-INPUT
------
-data/processed/incidents_processed.csv
-
-The preprocessing stage has already created:
-    embedding_text
-    incident_id
-    category
-    severity
-    priority
-    affected_service
-    environment
-    ...other processed fields
-
-This script performs:
-
-    Processed CSV
-        ↓
-    Tokenization
-        ↓
-    Token-length analysis
-        ↓
-    Token-aware chunking for long incidents
-        ↓
-    Sentence Transformer embeddings
-        ↓
-    Chunk embedding aggregation
-        ↓
-    L2 normalization
-        ↓
-    Save embeddings + chunk data + metadata
-
-IMPORTANT
----------
-For this project, most incident descriptions are short.
-Therefore, chunking is NOT forced on every record.
-
-If an incident fits inside the model's token limit:
-    one incident -> one chunk -> one embedding
-
-If it is longer:
-    one incident -> multiple overlapping chunks
-    -> embed each chunk
-    -> weighted mean pooling
-    -> one final vector per incident
-
-This preserves ONE VECTOR PER INCIDENT, which is ideal for ChromaDB.
-
-Recommended model:
-    sentence-transformers/all-MiniLM-L6-v2
-
-Install:
-    pip install pandas numpy torch transformers sentence-transformers tqdm
-
-Run:
-    python embedding_pipeline.py
-
-Or:
-    python embedding_pipeline.py ^
-        --input data/processed/incidents_processed.csv ^
-        --output-dir data/embeddings
-
-Outputs:
-    data/embeddings/
-        incident_embeddings.npy
-        incident_ids.csv
-        incident_chunks.csv
-        token_statistics.csv
-        embedding_metadata.json
-"""
-
 from __future__ import annotations
 
 import argparse
@@ -94,11 +19,10 @@ from transformers import AutoTokenizer
 
 DEFAULT_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
-# all-MiniLM-L6-v2 is designed around a 256-token input length.
-# We keep a safety margin for special tokens.
+# all-MiniLM-L6-v2 supports 256 tokens.
+# Keep a safety margin.
 DEFAULT_CHUNK_SIZE = 200
 DEFAULT_CHUNK_OVERLAP = 40
-
 DEFAULT_BATCH_SIZE = 32
 
 REQUIRED_COLUMNS = [
@@ -106,71 +30,355 @@ REQUIRED_COLUMNS = [
     "embedding_text",
 ]
 
+EXPECTED_RECORDS = 8000
+EXPECTED_EMBEDDING_DIMENSION = 384
+
 
 # ============================================================
-# DATA LOADING / VALIDATION
+# FIELDS USED TO BUILD RICH INCIDENT REPRESENTATION
+# ============================================================
+
+CORE_FIELDS = [
+    "incident_description",
+    "category",
+    "severity",
+    "priority",
+    "affected_service",
+    "environment",
+    "issue_type",
+]
+
+
+TECHNICAL_SIGNAL_FIELDS = [
+    # Application / API / workload
+    "feature_observed_cpu_percent",
+    "feature_observed_memory_percent",
+    "feature_request_latency_ms",
+    "feature_error_rate_percent",
+    "feature_affected_records_or_requests",
+    "feature_incident_duration_minutes",
+    "feature_retry_count",
+    "feature_records_processed",
+    "feature_records_affected",
+    "feature_pipeline_delay_minutes",
+    "feature_validation_failure_rate_percent",
+    "feature_schema_check",
+    "feature_normal_workload_multiplier",
+    "feature_peak_cpu_percent",
+    "feature_peak_memory_percent",
+    "feature_queue_depth",
+
+    # Disaster recovery
+    "feature_rpo_minutes",
+    "feature_rto_minutes",
+    "feature_backup_age_hours",
+    "feature_recovery_test_status",
+
+    # Network
+    "feature_packet_loss_percent",
+    "feature_network_latency_ms",
+    "feature_bandwidth_utilization_percent",
+    "feature_dns_response_ms",
+
+    # Database
+    "feature_db_connections",
+    "feature_db_cpu_percent",
+    "feature_query_latency_ms",
+    "feature_lock_waits",
+    "feature_replication_lag_seconds",
+
+    # Security
+    "feature_suspicious_requests",
+    "feature_blocked_requests",
+    "feature_authentication_failures",
+    "feature_security_event_count",
+
+    # Change / deployment
+    "feature_change_event",
+    "feature_minutes_after_change",
+    "feature_error_rate_before_change_percent",
+    "feature_error_rate_after_change_percent",
+
+    # Testing
+    "feature_tests_executed",
+    "feature_tests_failed",
+    "feature_coverage_percent",
+
+    # Observability
+    "feature_environment_match",
+    "feature_telemetry_events",
+    "feature_missing_signal_percent",
+    "feature_alert_delay_seconds",
+    "feature_metric_collection_status",
+
+    # Infrastructure
+    "feature_disk_utilization_percent",
+    "feature_pod_restart_count",
+    "feature_pending_workloads",
+    "feature_node_health",
+    "feature_resource_utilization_percent",
+]
+
+
+# ============================================================
+# FIELDS THAT MUST NEVER ENTER EMBEDDING TEXT
+# ============================================================
+
+FORBIDDEN_EMBEDDING_FIELDS = {
+    # Ground-truth / answer fields
+    "root_cause",
+    "root_cause_clean",
+    "root_cause_normalized",
+
+    "resolution",
+    "resolution_clean",
+    "resolution_normalized",
+
+    "preventive_action",
+    "preventive_action_clean",
+    "preventive_action_normalized",
+
+    # Identifier must not be used to create artificial uniqueness
+    "incident_id",
+
+    # Existing derived embedding field must not recursively enter itself
+    "embedding_text",
+
+    # Derived RCA/evidence information may leak target information
+    "rca_evidence_features",
+
+    # ChromaDB-specific information
+    "chroma_metadata",
+
+    # Dataset metadata / validation fields
+    "dataset_features",
+    "is_symptom_category",
+    "rca_category_valid",
+
+    # Derived temporal metadata
+    "timestamp_parsed",
+    "incident_date",
+    "incident_year",
+    "incident_month",
+    "incident_week",
+    "incident_day_of_week",
+    "incident_hour",
+
+    # Existing derived change indicators
+    "change_event_present",
+    "post_change_incident",
+    "minutes_after_change_numeric",
+    "error_rate_change_after_change",
+}
+
+
+# ============================================================
+# DATA LOADING
 # ============================================================
 
 def load_dataset(input_path: Path) -> pd.DataFrame:
-    """Load and validate the processed RCA dataset."""
+    """Load and validate the processed incident dataset."""
 
     if not input_path.exists():
         raise FileNotFoundError(
-            f"Processed dataset was not found:\n{input_path}\n\n"
-            "Make sure your preprocessing script created "
-            "data/processed/incidents_processed.csv."
+            f"Processed dataset not found:\n{input_path}"
         )
 
     df = pd.read_csv(input_path)
 
-    missing = [c for c in REQUIRED_COLUMNS if c not in df.columns]
+    missing = [
+        column
+        for column in REQUIRED_COLUMNS
+        if column not in df.columns
+    ]
 
     if missing:
         raise ValueError(
-            "The processed CSV is missing required columns:\n"
-            f"{missing}\n\n"
-            "Your preprocessing output must contain at least:\n"
-            "incident_id\n"
-            "embedding_text"
+            f"Missing required columns: {missing}"
         )
 
     if df.empty:
-        raise ValueError("The processed dataset is empty.")
+        raise ValueError(
+            "Processed incident dataset is empty."
+        )
 
-    # Incident IDs must be unique because we create one final embedding
-    # per historical incident.
-    duplicate_ids = int(df["incident_id"].duplicated().sum())
+    duplicate_ids = int(
+        df["incident_id"].duplicated().sum()
+    )
 
     if duplicate_ids:
         raise ValueError(
-            f"Found {duplicate_ids} duplicate incident_id values. "
-            "Resolve duplicates before creating embeddings."
+            f"Found {duplicate_ids} duplicate incident_id values."
         )
 
-    # Do not silently embed missing text.
-    missing_text = int(
-        df["embedding_text"]
-        .fillna("")
-        .astype(str)
-        .str.strip()
-        .eq("")
-        .sum()
-    )
-
-    if missing_text:
+    if EXPECTED_RECORDS and len(df) != EXPECTED_RECORDS:
         raise ValueError(
-            f"{missing_text} incidents have empty embedding_text. "
-            "Fix the preprocessing stage before embedding."
+            f"Expected {EXPECTED_RECORDS} incidents, "
+            f"but found {len(df)}."
         )
-
-    df["embedding_text"] = (
-        df["embedding_text"]
-        .fillna("")
-        .astype(str)
-        .str.strip()
-    )
 
     return df
+
+
+# ============================================================
+# SAFE VALUE FORMATTING
+# ============================================================
+
+def is_missing(value) -> bool:
+    """Return True when a dataframe value is missing."""
+
+    if pd.isna(value):
+        return True
+
+    text = str(value).strip()
+
+    return text == "" or text.lower() in {
+        "nan",
+        "none",
+        "null",
+        "na",
+        "n/a",
+    }
+
+
+def format_field(
+    label: str,
+    value,
+) -> str | None:
+    """
+    Convert a dataframe field into readable text.
+
+    Missing values are skipped instead of generating
+    meaningless text such as 'CPU: nan'.
+    """
+
+    if is_missing(value):
+        return None
+
+    if isinstance(value, float):
+        if np.isnan(value):
+            return None
+
+        # Keep useful numerical precision without excessive decimals.
+        if value.is_integer():
+            value = int(value)
+        else:
+            value = round(value, 3)
+
+    return f"{label}: {value}"
+
+
+# ============================================================
+# RICH EMBEDDING TEXT
+# ============================================================
+
+def build_rich_embedding_text(
+    row: pd.Series,
+) -> str:
+    """
+    Build a semantic representation of the INCIDENT itself.
+
+    IMPORTANT:
+        Root cause, resolution and preventive action are excluded.
+
+    This representation combines:
+        - incident description
+        - issue/category context
+        - service/environment context
+        - observed technical signals
+        - change/deployment signals
+        - operational metrics
+
+    It does NOT add incident_id to create artificial uniqueness.
+    """
+
+    sections: List[str] = []
+
+    # --------------------------------------------------------
+    # 1. Core incident context
+    # --------------------------------------------------------
+
+    core_lines: List[str] = []
+
+    for column in CORE_FIELDS:
+        if column not in row.index:
+            continue
+
+        value = format_field(
+            column.replace("_", " ").title(),
+            row[column],
+        )
+
+        if value:
+            core_lines.append(value)
+
+    if core_lines:
+        sections.append(
+            "Incident Context:\n"
+            + "\n".join(core_lines)
+        )
+
+    # --------------------------------------------------------
+    # 2. Technical observations
+    # --------------------------------------------------------
+
+    signal_lines: List[str] = []
+
+    for column in TECHNICAL_SIGNAL_FIELDS:
+        if column not in row.index:
+            continue
+
+        value = format_field(
+            column.replace("_", " ").title(),
+            row[column],
+        )
+
+        if value:
+            signal_lines.append(value)
+
+    if signal_lines:
+        sections.append(
+            "Observed Technical Signals:\n"
+            + "\n".join(signal_lines)
+        )
+
+    return "\n\n".join(sections).strip()
+
+
+def build_embedding_texts(
+    df: pd.DataFrame,
+) -> pd.DataFrame:
+    """
+    Construct rich embedding_text for every incident.
+
+    The existing embedding_text is NOT blindly trusted because
+    duplicate/template-heavy text is the current problem.
+    """
+
+    print("\nBuilding rich incident representations...")
+
+    texts = []
+
+    for _, row in tqdm(
+        df.iterrows(),
+        total=len(df),
+        desc="Building embedding text",
+    ):
+        text = build_rich_embedding_text(row)
+
+        if not text:
+            raise ValueError(
+                f"Incident {row['incident_id']} produced "
+                "an empty embedding representation."
+            )
+
+        texts.append(text)
+
+    result = df.copy()
+
+    result["embedding_text"] = texts
+
+    return result
 
 
 # ============================================================
@@ -178,80 +386,70 @@ def load_dataset(input_path: Path) -> pd.DataFrame:
 # ============================================================
 
 def load_tokenizer(model_name: str):
-    """
-    Load the tokenizer belonging to the embedding model.
+    """Load the tokenizer associated with the embedding model."""
 
-    We intentionally use the SAME tokenizer family as the embedding
-    model. Do not use a different tokenizer for chunking.
-    """
-
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-    return tokenizer
+    return AutoTokenizer.from_pretrained(
+        model_name
+    )
 
 
 def get_model_token_limit(
     tokenizer,
     model: SentenceTransformer,
 ) -> int:
-    """
-    Determine a safe token limit.
+    """Determine the safe token limit."""
 
-    all-MiniLM-L6-v2 normally uses 256 tokens. We use the lower of
-    the tokenizer limit and SentenceTransformers model limit when
-    both are finite.
-    """
-
-    tokenizer_limit = getattr(tokenizer, "model_max_length", 256)
+    tokenizer_limit = getattr(
+        tokenizer,
+        "model_max_length",
+        256,
+    )
 
     try:
-        st_limit = int(model.max_seq_length)
+        model_limit = int(
+            model.max_seq_length
+        )
     except Exception:
-        st_limit = 256
+        model_limit = 256
 
-    # Hugging Face sometimes represents "unlimited" as a huge integer.
     if tokenizer_limit is None or tokenizer_limit > 10000:
         tokenizer_limit = 256
 
-    if st_limit is None or st_limit > 10000:
-        st_limit = 256
+    if model_limit is None or model_limit > 10000:
+        model_limit = 256
 
-    return min(int(tokenizer_limit), int(st_limit))
+    return min(
+        int(tokenizer_limit),
+        int(model_limit),
+    )
 
 
 # ============================================================
 # TOKENIZATION
 # ============================================================
 
-def count_tokens(
-    text: str,
-    tokenizer,
-) -> int:
-    """
-    Count tokens WITHOUT adding [CLS]/[SEP] special tokens.
-
-    The count is used for statistics and chunking.
-    """
-
-    token_ids = tokenizer.encode(
-        text,
-        add_special_tokens=False,
-        truncation=False,
-    )
-
-    return len(token_ids)
-
-
 def tokenize_text(
     text: str,
     tokenizer,
 ) -> List[int]:
-    """Convert text into token IDs without special tokens."""
 
     return tokenizer.encode(
         text,
         add_special_tokens=False,
         truncation=False,
+    )
+
+
+def count_tokens(
+    text: str,
+    tokenizer,
+) -> int:
+
+    return len(
+        tokenize_text(
+            text,
+            tokenizer,
+        )
     )
 
 
@@ -262,29 +460,24 @@ def tokenize_text(
 def chunk_token_ids(
     token_ids: List[int],
     tokenizer,
-    chunk_size: int = DEFAULT_CHUNK_SIZE,
-    overlap: int = DEFAULT_CHUNK_OVERLAP,
+    chunk_size: int,
+    overlap: int,
 ) -> List[str]:
     """
-    Split token IDs into overlapping token-aware chunks.
+    Split only long incident representations.
 
-    Example:
-        token count = 420
-        chunk size = 200
-        overlap = 40
-
-        chunk 1: 0:200
-        chunk 2: 160:360
-        chunk 3: 320:420
-
-    The chunks are decoded back to text before embedding.
+    Short incidents remain one incident -> one chunk.
     """
 
     if chunk_size <= 0:
-        raise ValueError("chunk_size must be > 0.")
+        raise ValueError(
+            "chunk_size must be greater than zero."
+        )
 
     if overlap < 0:
-        raise ValueError("overlap must be >= 0.")
+        raise ValueError(
+            "overlap cannot be negative."
+        )
 
     if overlap >= chunk_size:
         raise ValueError(
@@ -292,26 +485,32 @@ def chunk_token_ids(
         )
 
     if not token_ids:
-        return [""]
+        return []
 
     if len(token_ids) <= chunk_size:
-        return [
-            tokenizer.decode(
-                token_ids,
-                skip_special_tokens=True,
-                clean_up_tokenization_spaces=True,
-            ).strip()
-        ]
+        text = tokenizer.decode(
+            token_ids,
+            skip_special_tokens=True,
+            clean_up_tokenization_spaces=True,
+        ).strip()
+
+        return [text] if text else []
 
     chunks: List[str] = []
 
-    start = 0
     step = chunk_size - overlap
+    start = 0
 
     while start < len(token_ids):
-        end = min(start + chunk_size, len(token_ids))
 
-        chunk_ids = token_ids[start:end]
+        end = min(
+            start + chunk_size,
+            len(token_ids),
+        )
+
+        chunk_ids = token_ids[
+            start:end
+        ]
 
         chunk_text = tokenizer.decode(
             chunk_ids,
@@ -336,28 +535,28 @@ def create_chunks(
     chunk_size: int,
     overlap: int,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """
-    Create token statistics and chunk records.
 
-    Returns:
-        token_stats_df
-        chunks_df
-    """
-
-    token_stats: List[Dict] = []
-    chunk_records: List[Dict] = []
+    token_statistics = []
+    chunk_records = []
 
     for _, row in tqdm(
         df.iterrows(),
         total=len(df),
         desc="Tokenizing + chunking",
     ):
-        incident_id = str(row["incident_id"])
-        text = str(row["embedding_text"])
 
-        token_ids = tokenize_text(text, tokenizer)
+        incident_id = str(
+            row["incident_id"]
+        )
 
-        token_count = len(token_ids)
+        text = str(
+            row["embedding_text"]
+        )
+
+        token_ids = tokenize_text(
+            text,
+            tokenizer,
+        )
 
         chunks = chunk_token_ids(
             token_ids=token_ids,
@@ -366,271 +565,405 @@ def create_chunks(
             overlap=overlap,
         )
 
-        token_stats.append(
+        if not chunks:
+            raise ValueError(
+                f"No chunks generated for {incident_id}."
+            )
+
+        token_statistics.append(
             {
                 "incident_id": incident_id,
-                "token_count": token_count,
+                "token_count": len(token_ids),
                 "chunk_count": len(chunks),
                 "was_chunked": len(chunks) > 1,
             }
         )
 
-        for chunk_index, chunk_text in enumerate(chunks):
-            chunk_token_count = count_tokens(
-                chunk_text,
-                tokenizer,
-            )
+        for chunk_index, chunk_text in enumerate(
+            chunks
+        ):
 
             chunk_records.append(
                 {
                     "incident_id": incident_id,
                     "chunk_index": chunk_index,
                     "chunk_id": (
-                        f"{incident_id}_chunk_{chunk_index}"
+                        f"{incident_id}_"
+                        f"chunk_{chunk_index}"
                     ),
                     "chunk_text": chunk_text,
-                    "chunk_token_count": chunk_token_count,
+                    "chunk_token_count": count_tokens(
+                        chunk_text,
+                        tokenizer,
+                    ),
                 }
             )
 
-    token_stats_df = pd.DataFrame(token_stats)
-    chunks_df = pd.DataFrame(chunk_records)
+    token_stats_df = pd.DataFrame(
+        token_statistics
+    )
 
-    return token_stats_df, chunks_df
+    chunks_df = pd.DataFrame(
+        chunk_records
+    )
+
+    return (
+        token_stats_df,
+        chunks_df.reset_index(drop=True),
+    )
 
 
 # ============================================================
-# EMBEDDING
+# EMBEDDING MODEL
 # ============================================================
 
-def load_embedding_model(model_name: str) -> SentenceTransformer:
-    """Load the Sentence Transformer model."""
+def load_embedding_model(
+    model_name: str,
+) -> SentenceTransformer:
 
-    print("\nLoading embedding model...")
-    print(f"Model: {model_name}")
+    print("\nLoading embedding model:")
+    print(model_name)
 
-    model = SentenceTransformer(model_name)
+    model = SentenceTransformer(
+        model_name
+    )
 
-    print(
-        f"Model max sequence length: "
-        f"{model.max_seq_length}"
+    dimension = (
+        model.get_sentence_embedding_dimension()
     )
 
     print(
-        f"Embedding dimension: "
-        f"{model.get_sentence_embedding_dimension()}"
+        f"Embedding dimension: {dimension}"
     )
+
+    if dimension != EXPECTED_EMBEDDING_DIMENSION:
+        raise ValueError(
+            f"Expected embedding dimension "
+            f"{EXPECTED_EMBEDDING_DIMENSION}, "
+            f"but model produced {dimension}."
+        )
 
     return model
 
+
+# ============================================================
+# CHUNK EMBEDDINGS
+# ============================================================
 
 def encode_chunks(
     chunks_df: pd.DataFrame,
     model: SentenceTransformer,
     batch_size: int,
 ) -> np.ndarray:
-    """Generate one embedding for every chunk."""
 
-    texts = chunks_df["chunk_text"].tolist()
-
-    print("\nGenerating chunk embeddings...")
-    print(f"Total chunks: {len(texts)}")
-    print(f"Batch size: {batch_size}")
+    texts = (
+        chunks_df["chunk_text"]
+        .tolist()
+    )
 
     embeddings = model.encode(
         texts,
         batch_size=batch_size,
         show_progress_bar=True,
         convert_to_numpy=True,
-        normalize_embeddings=False,
+        normalize_embeddings=True,
     )
 
-    embeddings = np.asarray(embeddings, dtype=np.float32)
+    embeddings = np.asarray(
+        embeddings,
+        dtype=np.float32,
+    )
 
     if embeddings.ndim != 2:
         raise ValueError(
-            f"Unexpected embedding shape: {embeddings.shape}"
+            f"Invalid embedding shape: "
+            f"{embeddings.shape}"
+        )
+
+    if not np.isfinite(
+        embeddings
+    ).all():
+
+        raise ValueError(
+            "Chunk embeddings contain "
+            "NaN or infinite values."
         )
 
     return embeddings
 
 
 # ============================================================
-# CHUNK EMBEDDING AGGREGATION
+# L2 NORMALIZATION
 # ============================================================
 
-def l2_normalize(vector: np.ndarray) -> np.ndarray:
-    """Normalize a vector to unit length."""
+def l2_normalize(
+    vector: np.ndarray,
+) -> np.ndarray:
 
-    norm = np.linalg.norm(vector)
+    norm = np.linalg.norm(
+        vector
+    )
 
     if norm == 0:
-        return vector.astype(np.float32)
+        raise ValueError(
+            "Cannot normalize a zero vector."
+        )
 
-    return (vector / norm).astype(np.float32)
+    return (
+        vector / norm
+    ).astype(np.float32)
 
+
+# ============================================================
+# AGGREGATION
+# ============================================================
 
 def aggregate_chunk_embeddings(
     df: pd.DataFrame,
     chunks_df: pd.DataFrame,
     chunk_embeddings: np.ndarray,
 ) -> Tuple[np.ndarray, pd.DataFrame]:
-    """
-    Convert multiple chunk vectors back into ONE vector per incident.
 
-    Weighted mean pooling:
-        chunk embedding × chunk token count
-
-    Then L2 normalize.
-
-    This means:
-        8000 incidents -> 8000 final embeddings
-    """
-
-    if len(chunks_df) != len(chunk_embeddings):
+    if len(chunks_df) != len(
+        chunk_embeddings
+    ):
         raise ValueError(
-            "Chunk count and embedding count do not match."
+            "Chunk count and embedding count "
+            "do not match."
         )
 
-    embedding_dim = chunk_embeddings.shape[1]
+    embedding_by_incident = {}
 
-    final_embeddings: List[np.ndarray] = []
-    incident_rows: List[Dict] = []
-
-    grouped = chunks_df.groupby(
+    for incident_id, group in chunks_df.groupby(
         "incident_id",
         sort=False,
-    )
+    ):
 
-    for incident_id, group in grouped:
         indices = group.index.to_numpy()
 
-        # The chunk dataframe index is reset/kept aligned before this call.
-        vectors = chunk_embeddings[indices]
+        vectors = chunk_embeddings[
+            indices
+        ]
 
         weights = group[
             "chunk_token_count"
-        ].to_numpy(dtype=np.float32)
+        ].to_numpy(
+            dtype=np.float32
+        )
 
-        # Prevent zero total weight.
         if weights.sum() <= 0:
-            weights = np.ones(len(weights), dtype=np.float32)
+            weights = np.ones(
+                len(weights),
+                dtype=np.float32,
+            )
 
-        weighted_vector = (
+        weighted_mean = (
             vectors * weights[:, None]
         ).sum(axis=0) / weights.sum()
 
-        final_vector = l2_normalize(weighted_vector)
-
-        final_embeddings.append(final_vector)
-
-        incident_rows.append(
-            {
-                "incident_id": str(incident_id),
-                "chunk_count": int(len(group)),
-            }
+        final_vector = l2_normalize(
+            weighted_mean
         )
 
-    final_embeddings_array = np.vstack(
-        final_embeddings
-    ).astype(np.float32)
+        embedding_by_incident[
+            str(incident_id)
+        ] = final_vector
 
-    incident_embedding_info = pd.DataFrame(
-        incident_rows
-    )
+    # --------------------------------------------------------
+    # IMPORTANT:
+    # Preserve EXACT original CSV incident order.
+    # --------------------------------------------------------
 
-    # Verify that every original incident has exactly one vector.
-    expected_ids = (
+    final_embeddings = []
+
+    embedding_rows = []
+
+    for incident_id in (
         df["incident_id"]
         .astype(str)
         .tolist()
+    ):
+
+        if incident_id not in (
+            embedding_by_incident
+        ):
+            raise ValueError(
+                f"Missing final embedding "
+                f"for {incident_id}."
+            )
+
+        final_embeddings.append(
+            embedding_by_incident[
+                incident_id
+            ]
+        )
+
+        chunk_count = int(
+            chunks_df[
+                chunks_df["incident_id"]
+                .astype(str)
+                == incident_id
+            ].shape[0]
+        )
+
+        embedding_rows.append(
+            {
+                "incident_id": incident_id,
+                "chunk_count": chunk_count,
+            }
+        )
+
+    final_embeddings = np.vstack(
+        final_embeddings
+    ).astype(np.float32)
+
+    embedding_info = pd.DataFrame(
+        embedding_rows
     )
 
-    actual_ids = (
-        incident_embedding_info["incident_id"]
-        .astype(str)
-        .tolist()
+    return (
+        final_embeddings,
+        embedding_info,
     )
-
-    if set(expected_ids) != set(actual_ids):
-        missing = sorted(
-            set(expected_ids) - set(actual_ids)
-        )
-        extra = sorted(
-            set(actual_ids) - set(expected_ids)
-        )
-
-        raise ValueError(
-            "Final embedding incident IDs do not match "
-            f"the source dataset.\nMissing: {missing[:10]}"
-            f"\nExtra: {extra[:10]}"
-        )
-
-    return final_embeddings_array, incident_embedding_info
 
 
 # ============================================================
-# SAVE METADATA
+# DIVERSITY ANALYSIS
 # ============================================================
 
-def build_embedding_metadata(
+def calculate_diversity(
+    embedding_texts: List[str],
+    embeddings: np.ndarray,
+) -> Dict:
+
+    unique_texts = len(
+        set(embedding_texts)
+    )
+
+    duplicate_texts = (
+        len(embedding_texts)
+        - unique_texts
+    )
+
+    unique_vectors = np.unique(
+        embeddings,
+        axis=0,
+    ).shape[0]
+
+    duplicate_vectors = (
+        len(embeddings)
+        - unique_vectors
+    )
+
+    return {
+        "total_incidents": int(
+            len(embedding_texts)
+        ),
+        "unique_embedding_texts": int(
+            unique_texts
+        ),
+        "duplicate_embedding_texts": int(
+            duplicate_texts
+        ),
+        "text_uniqueness_percent": round(
+            100 * unique_texts / len(
+                embedding_texts
+            ),
+            2,
+        ),
+        "unique_embeddings": int(
+            unique_vectors
+        ),
+        "duplicate_embeddings": int(
+            duplicate_vectors
+        ),
+        "embedding_uniqueness_percent": round(
+            100 * unique_vectors / len(
+                embeddings
+            ),
+            2,
+        ),
+    }
+
+
+# ============================================================
+# METADATA
+# ============================================================
+
+def build_metadata(
     df: pd.DataFrame,
     token_stats_df: pd.DataFrame,
-    final_embeddings: np.ndarray,
+    embeddings: np.ndarray,
+    diversity: Dict,
     model_name: str,
-    tokenizer,
     chunk_size: int,
     overlap: int,
 ) -> Dict:
 
-    token_counts = token_stats_df["token_count"]
+    token_counts = (
+        token_stats_df["token_count"]
+    )
 
-    metadata = {
+    return {
         "project": (
             "Evidence-Based AI Incident RCA "
             "& Resolution Intelligence System"
         ),
         "model": model_name,
-        "tokenizer": model_name,
         "embedding_dimension": int(
-            final_embeddings.shape[1]
+            embeddings.shape[1]
         ),
-        "incident_count": int(len(df)),
+        "incident_count": int(
+            len(df)
+        ),
         "final_embedding_count": int(
-            len(final_embeddings)
+            len(embeddings)
         ),
         "chunk_count": int(
-            token_stats_df["chunk_count"].sum()
+            token_stats_df[
+                "chunk_count"
+            ].sum()
         ),
         "chunked_incident_count": int(
-            token_stats_df["was_chunked"].sum()
+            token_stats_df[
+                "was_chunked"
+            ].sum()
         ),
-        "unchunked_incident_count": int(
-            (~token_stats_df["was_chunked"]).sum()
+        "chunk_size": int(
+            chunk_size
         ),
-        "min_token_count": int(token_counts.min()),
-        "max_token_count": int(token_counts.max()),
-        "mean_token_count": float(token_counts.mean()),
+        "chunk_overlap": int(
+            overlap
+        ),
+        "normalization": "L2",
+        "aggregation": (
+            "token-count-weighted "
+            "mean pooling"
+        ),
+        "one_vector_per_incident": True,
+        "embedding_input_policy": (
+            "Incident description, categorical "
+            "context and observed technical signals"
+        ),
+        "label_leakage_protection": [
+            "root_cause",
+            "resolution",
+            "preventive_action",
+        ],
+        "diversity": diversity,
+        "min_token_count": int(
+            token_counts.min()
+        ),
+        "max_token_count": int(
+            token_counts.max()
+        ),
+        "mean_token_count": float(
+            token_counts.mean()
+        ),
         "median_token_count": float(
             token_counts.median()
         ),
-        "chunk_size": int(chunk_size),
-        "chunk_overlap": int(overlap),
-        "normalization": "L2",
-        "aggregation": (
-            "token-count-weighted mean of chunk embeddings"
-        ),
-        "one_vector_per_incident": True,
-        "tokenizer_model_max_length": int(
-            getattr(
-                tokenizer,
-                "model_max_length",
-                256,
-            )
-        ),
     }
-
-    return metadata
 
 
 # ============================================================
@@ -652,103 +985,146 @@ def run_pipeline(
     )
 
     print("=" * 72)
-    print("RCA TOKENIZATION + CHUNKING + EMBEDDING PIPELINE")
+    print(
+        "AI INCIDENT RCA - "
+        "SEMANTIC EMBEDDING PIPELINE"
+    )
     print("=" * 72)
 
     # --------------------------------------------------------
-    # 1. Load processed dataset
+    # 1. Load dataset
     # --------------------------------------------------------
 
-    print("\n[1/7] Loading processed dataset...")
-    df = load_dataset(input_path)
+    print("\n[1/7] Loading dataset...")
 
-    print(f"Incidents loaded: {len(df):,}")
+    df = load_dataset(
+        input_path
+    )
+
+    print(
+        f"Incidents loaded: {len(df):,}"
+    )
 
     # --------------------------------------------------------
-    # 2. Load model + tokenizer
+    # 2. Build rich embedding representation
     # --------------------------------------------------------
 
-    print("\n[2/7] Loading tokenizer and embedding model...")
+    print(
+        "\n[2/7] Building rich "
+        "incident representations..."
+    )
 
-    tokenizer = load_tokenizer(model_name)
-    model = load_embedding_model(model_name)
+    original_texts = (
+        df["embedding_text"]
+        .fillna("")
+        .astype(str)
+        .str.strip()
+        .tolist()
+    )
+
+    original_unique = len(
+        set(original_texts)
+    )
+
+    print(
+        f"Original unique embedding_text: "
+        f"{original_unique:,}"
+    )
+
+    df = build_embedding_texts(
+        df
+    )
+
+    new_texts = (
+        df["embedding_text"]
+        .astype(str)
+        .str.strip()
+        .tolist()
+    )
+
+    new_unique = len(
+        set(new_texts)
+    )
+
+    print(
+        f"New unique embedding_text: "
+        f"{new_unique:,}"
+    )
+
+    print(
+        f"New duplicate embedding_text: "
+        f"{len(new_texts) - new_unique:,}"
+    )
+
+    # --------------------------------------------------------
+    # 3. Load tokenizer + model
+    # --------------------------------------------------------
+
+    print(
+        "\n[3/7] Loading tokenizer "
+        "and embedding model..."
+    )
+
+    tokenizer = load_tokenizer(
+        model_name
+    )
+
+    model = load_embedding_model(
+        model_name
+    )
 
     model_limit = get_model_token_limit(
         tokenizer,
         model,
     )
 
-    print(f"Safe model token limit: {model_limit}")
+    print(
+        f"Safe token limit: "
+        f"{model_limit}"
+    )
 
     if chunk_size >= model_limit:
         raise ValueError(
-            f"chunk_size={chunk_size} is too large for "
-            f"model limit={model_limit}. "
-            "Use a smaller value such as 200."
+            f"chunk_size={chunk_size} must be "
+            f"less than model limit={model_limit}."
         )
 
     # --------------------------------------------------------
-    # 3. Tokenization + chunking
+    # 4. Tokenization + optional chunking
     # --------------------------------------------------------
 
-    print("\n[3/7] Tokenizing and chunking...")
-
-    token_stats_df, chunks_df = create_chunks(
-        df=df,
-        tokenizer=tokenizer,
-        chunk_size=chunk_size,
-        overlap=overlap,
+    print(
+        "\n[4/7] Tokenizing and "
+        "chunking long incidents..."
     )
 
-    # IMPORTANT:
-    # Reset index so chunk dataframe row positions correspond exactly
-    # to chunk_embeddings row positions.
-    chunks_df = chunks_df.reset_index(drop=True)
+    token_stats_df, chunks_df = (
+        create_chunks(
+            df=df,
+            tokenizer=tokenizer,
+            chunk_size=chunk_size,
+            overlap=overlap,
+        )
+    )
 
     print(
-        f"Total chunks generated: "
+        f"Total chunks: "
         f"{len(chunks_df):,}"
     )
 
     print(
-        f"Incidents requiring chunking: "
+        f"Incidents chunked: "
         f"{int(token_stats_df['was_chunked'].sum()):,}"
-    )
-
-    print(
-        f"Maximum tokens in an incident: "
-        f"{int(token_stats_df['token_count'].max())}"
-    )
-
-    # --------------------------------------------------------
-    # 4. Save chunk information
-    # --------------------------------------------------------
-
-    print("\n[4/7] Saving chunk information...")
-
-    chunks_path = (
-        output_dir / "incident_chunks.csv"
-    )
-
-    token_stats_path = (
-        output_dir / "token_statistics.csv"
-    )
-
-    chunks_df.to_csv(
-        chunks_path,
-        index=False,
-    )
-
-    token_stats_df.to_csv(
-        token_stats_path,
-        index=False,
     )
 
     # --------------------------------------------------------
     # 5. Generate chunk embeddings
     # --------------------------------------------------------
 
-    print("\n[5/7] Generating embeddings...")
+    print(
+        "\n[5/7] Generating "
+        "Sentence Transformer embeddings..."
+    )
 
     chunk_embeddings = encode_chunks(
         chunks_df=chunks_df,
@@ -762,12 +1138,12 @@ def run_pipeline(
     )
 
     # --------------------------------------------------------
-    # 6. Aggregate chunks -> one vector per incident
+    # 6. Aggregate to one vector per incident
     # --------------------------------------------------------
 
     print(
-        "\n[6/7] Aggregating chunk embeddings "
-        "into one vector per incident..."
+        "\n[6/7] Creating one final "
+        "vector per incident..."
     )
 
     final_embeddings, embedding_info = (
@@ -778,46 +1154,83 @@ def run_pipeline(
         )
     )
 
+    if final_embeddings.shape != (
+        len(df),
+        EXPECTED_EMBEDDING_DIMENSION,
+    ):
+        raise RuntimeError(
+            f"Unexpected final embedding shape: "
+            f"{final_embeddings.shape}"
+        )
+
+    # --------------------------------------------------------
+    # 7. Diversity + save
+    # --------------------------------------------------------
+
     print(
-        f"Final embedding shape: "
-        f"{final_embeddings.shape}"
+        "\n[7/7] Validating and "
+        "saving embeddings..."
     )
 
-    # --------------------------------------------------------
-    # 7. Save final vectors + metadata
-    # --------------------------------------------------------
-
-    print("\n[7/7] Saving final embeddings...")
+    diversity = calculate_diversity(
+        embedding_texts=new_texts,
+        embeddings=final_embeddings,
+    )
 
     embeddings_path = (
-        output_dir / "incident_embeddings.npy"
+        output_dir
+        / "incident_embeddings.npy"
     )
 
     ids_path = (
-        output_dir / "incident_ids.csv"
+        output_dir
+        / "incident_ids.csv"
+    )
+
+    chunks_path = (
+        output_dir
+        / "incident_chunks.csv"
+    )
+
+    token_stats_path = (
+        output_dir
+        / "token_statistics.csv"
     )
 
     metadata_path = (
-        output_dir / "embedding_metadata.json"
+        output_dir
+        / "embedding_metadata.json"
     )
 
+    # Save vectors
     np.save(
         embeddings_path,
         final_embeddings,
     )
 
-    # Keep IDs in the exact same order as final_embeddings.
+    # Save IDs in EXACT vector order
     embedding_info.to_csv(
         ids_path,
         index=False,
     )
 
-    metadata = build_embedding_metadata(
+    # Save chunk information
+    chunks_df.to_csv(
+        chunks_path,
+        index=False,
+    )
+
+    token_stats_df.to_csv(
+        token_stats_path,
+        index=False,
+    )
+
+    metadata = build_metadata(
         df=df,
         token_stats_df=token_stats_df,
-        final_embeddings=final_embeddings,
+        embeddings=final_embeddings,
+        diversity=diversity,
         model_name=model_name,
-        tokenizer=tokenizer,
         chunk_size=chunk_size,
         overlap=overlap,
     )
@@ -826,35 +1239,29 @@ def run_pipeline(
         metadata_path,
         "w",
         encoding="utf-8",
-    ) as f:
+    ) as file:
+
         json.dump(
             metadata,
-            f,
+            file,
             indent=2,
         )
 
     # --------------------------------------------------------
-    # Final sanity checks
+    # Final numerical validation
     # --------------------------------------------------------
 
-    loaded_embeddings = np.load(
-        embeddings_path
-    )
+    if not np.isfinite(
+        final_embeddings
+    ).all():
 
-    if loaded_embeddings.shape[0] != len(df):
         raise RuntimeError(
-            "Number of final embeddings does not "
-            "equal number of incidents."
+            "Final embeddings contain "
+            "NaN or infinite values."
         )
 
-    if embedding_info["incident_id"].duplicated().any():
-        raise RuntimeError(
-            "Duplicate incident IDs found in embedding mapping."
-        )
-
-    # Check normalization.
     norms = np.linalg.norm(
-        loaded_embeddings,
+        final_embeddings,
         axis=1,
     )
 
@@ -863,54 +1270,92 @@ def run_pipeline(
         1.0,
         atol=1e-4,
     ):
+
         raise RuntimeError(
-            "Some final embeddings are not L2 normalized."
+            "Final embeddings are not "
+            "properly L2 normalized."
         )
 
+    # --------------------------------------------------------
+    # Final report
+    # --------------------------------------------------------
+
     print("\n" + "=" * 72)
-    print("PIPELINE COMPLETED SUCCESSFULLY")
+    print("EMBEDDING PIPELINE COMPLETE")
     print("=" * 72)
 
-    print(f"Incidents              : {len(df):,}")
-    print(f"Total chunks           : {len(chunks_df):,}")
     print(
-        "Chunked incidents      : "
-        f"{int(token_stats_df['was_chunked'].sum()):,}"
-    )
-    print(
-        "Max incident tokens    : "
-        f"{int(token_stats_df['token_count'].max()):,}"
-    )
-    print(
-        "Embedding dimension    : "
-        f"{final_embeddings.shape[1]}"
-    )
-    print(
-        "Final vectors          : "
-        f"{final_embeddings.shape[0]:,}"
+        f"Total incidents           : "
+        f"{len(df):,}"
     )
 
-    print("\nOutput files:")
+    print(
+        f"Original unique texts     : "
+        f"{original_unique:,}"
+    )
 
-    print(f"  {embeddings_path}")
-    print(f"  {ids_path}")
-    print(f"  {chunks_path}")
-    print(f"  {token_stats_path}")
-    print(f"  {metadata_path}")
+    print(
+        f"New unique texts          : "
+        f"{diversity['unique_embedding_texts']:,}"
+    )
 
-    print("\nReady for ChromaDB ingestion.")
+    print(
+        f"New duplicate texts       : "
+        f"{diversity['duplicate_embedding_texts']:,}"
+    )
+
+    print(
+        f"Unique final embeddings   : "
+        f"{diversity['unique_embeddings']:,}"
+    )
+
+    print(
+        f"Duplicate final embeddings: "
+        f"{diversity['duplicate_embeddings']:,}"
+    )
+
+    print(
+        f"Final vector shape        : "
+        f"{final_embeddings.shape}"
+    )
+
+    print(
+        "\nOutputs:"
+    )
+
+    print(
+        f"  {embeddings_path}"
+    )
+
+    print(
+        f"  {ids_path}"
+    )
+
+    print(
+        f"  {chunks_path}"
+    )
+
+    print(
+        f"  {token_stats_path}"
+    )
+
+    print(
+        f"  {metadata_path}"
+    )
+
     print("=" * 72)
 
 
 # ============================================================
-# COMMAND LINE
+# CLI
 # ============================================================
 
 def parse_args():
+
     parser = argparse.ArgumentParser(
         description=(
-            "Tokenize, chunk and embed the processed "
-            "IT RCA incident dataset."
+            "Generate semantic embeddings "
+            "for the AI Incident RCA system."
         )
     )
 
@@ -920,51 +1365,50 @@ def parse_args():
             "data/processed/"
             "incidents_processed.csv"
         ),
-        help="Processed CSV path.",
     )
 
     parser.add_argument(
         "--output-dir",
         default="data/embeddings",
-        help="Directory for embedding outputs.",
     )
 
     parser.add_argument(
         "--model",
         default=DEFAULT_MODEL,
-        help="Sentence Transformer model.",
     )
 
     parser.add_argument(
         "--chunk-size",
         type=int,
         default=DEFAULT_CHUNK_SIZE,
-        help="Maximum content tokens per chunk.",
     )
 
     parser.add_argument(
         "--overlap",
         type=int,
         default=DEFAULT_CHUNK_OVERLAP,
-        help="Token overlap between consecutive chunks.",
     )
 
     parser.add_argument(
         "--batch-size",
         type=int,
         default=DEFAULT_BATCH_SIZE,
-        help="Embedding batch size.",
     )
 
     return parser.parse_args()
 
 
 def main():
+
     args = parse_args()
 
     run_pipeline(
-        input_path=Path(args.input),
-        output_dir=Path(args.output_dir),
+        input_path=Path(
+            args.input
+        ),
+        output_dir=Path(
+            args.output_dir
+        ),
         model_name=args.model,
         chunk_size=args.chunk_size,
         overlap=args.overlap,
