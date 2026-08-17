@@ -1,0 +1,8 @@
+"""Configuration for hybrid incident reranking."""
+
+SEMANTIC_WEIGHT = 0.60
+SERVICE_WEIGHT = 0.20
+CATEGORY_WEIGHT = 0.10
+SEVERITY_WEIGHT = 0.10
+
+DEFAULT_FINAL_TOP_K = 5

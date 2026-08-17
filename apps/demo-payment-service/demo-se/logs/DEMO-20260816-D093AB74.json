@@ -1,0 +1,14 @@
+{
+    "incident_id": "DEMO-20260816-D093AB74",
+    "scenario_reference": "RCA-00017",
+    "service": "Payment API",
+    "environment": "Production",
+    "error_code": "HTTP 401",
+    "error_message": "HTTP 401: Payment failed. Authentication dependency credentials are expired.",
+    "customer": "Demo Customer",
+    "amount": 4999.0,
+    "timestamp": "2026-08-15T18:40:02.979041+00:00",
+    "request_id": "REQ-F7FA7CE91081",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}

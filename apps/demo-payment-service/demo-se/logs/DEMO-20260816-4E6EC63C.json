@@ -1,0 +1,17 @@
+{
+    "incident_id": "DEMO-20260816-4E6EC63C",
+    "scenario_reference": "RCA-00436",
+    "service": "demo-payment-service",
+    "environment": "Production",
+    "route": "/api/demo/payment",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+    "error_code": "HTTP 404",
+    "error_message": "HTTP 404: Payment API endpoint was not found.",
+    "customer": "Demo Customer",
+    "amount": 4999.0,
+    "customer_query": "My payment failed",
+    "timestamp": "2026-08-16T15:04:18.291404+00:00",
+    "request_id": "REQ-1DAE1A1E30AB",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}

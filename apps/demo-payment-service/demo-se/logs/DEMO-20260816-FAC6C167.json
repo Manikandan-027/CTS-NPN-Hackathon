@@ -1,0 +1,14 @@
+{
+    "incident_id": "DEMO-20260816-FAC6C167",
+    "scenario_reference": "RCA-00436",
+    "service": "Payment API",
+    "environment": "Production",
+    "error_code": "HTTP 404",
+    "error_message": "HTTP 404: Payment API endpoint was not found.",
+    "customer": "Hari",
+    "amount": 4999.0,
+    "timestamp": "2026-08-16T08:55:10.100964+00:00",
+    "request_id": "REQ-75198549FD17",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}
