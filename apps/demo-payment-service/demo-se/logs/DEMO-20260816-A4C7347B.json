@@ -1,0 +1,17 @@
+{
+    "incident_id": "DEMO-20260816-A4C7347B",
+    "scenario_reference": "RCA-00087",
+    "service": "demo-payment-service",
+    "environment": "Production",
+    "route": "/api/demo/payment",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+    "error_code": "HTTP 504",
+    "error_message": "HTTP 504: Payment gateway request timed out.",
+    "customer": "Demo Customer",
+    "amount": 4999.0,
+    "customer_query": "My payment failed",
+    "timestamp": "2026-08-16T14:53:32.007434+00:00",
+    "request_id": "REQ-D205DC6D7FD8",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}

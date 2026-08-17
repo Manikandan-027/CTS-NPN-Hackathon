@@ -1,0 +1,14 @@
+{
+    "incident_id": "DEMO-20260816-96F195B2",
+    "scenario_reference": "RCA-00372",
+    "service": "Payment API",
+    "environment": "Production",
+    "error_code": "HTTP 400",
+    "error_message": "HTTP 400: Payment request payload validation failed.",
+    "customer": "Akshaya",
+    "amount": 4555555.0,
+    "timestamp": "2026-08-16T09:05:39.846622+00:00",
+    "request_id": "REQ-62838D248ECE",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}

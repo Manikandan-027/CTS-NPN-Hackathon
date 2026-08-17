@@ -1,81 +1,47 @@
 from __future__ import annotations
 
+from pathlib import Path
 from typing import Any
 
-from backend.core.vector_db.client import (
-    ChromaClient,
-)
-
-from backend.core.vector_db.config import (
-    DEFAULT_TOP_K,
-    EMBEDDING_DIMENSION,
-)
+from backend.core.vector_db.client import ChromaClient
 
 
 class IncidentVectorRepository:
     """
-    Repository for historical incident vectors.
+    Repository layer for historical incident vectors stored in
+    local persistent ChromaDB.
 
-    Responsibilities:
-
-    - Add incident embeddings
-    - Count stored incidents
-    - Search similar incidents
-    - Retrieve metadata
+    This class provides a small, stable interface for:
+        - resetting the collection
+        - inserting incident records
+        - counting stored incidents
+        - querying similar incidents
     """
 
     def __init__(
         self,
-        persist_directory=None,
+        persist_directory: str | Path | None = None,
     ) -> None:
 
         if persist_directory is None:
-
-            self.chroma = (
-                ChromaClient()
-            )
-
+            self.client = ChromaClient()
         else:
-
-            self.chroma = (
-                ChromaClient(
-                    persist_directory
-                )
+            self.client = ChromaClient(
+                persist_directory=persist_directory
             )
 
         self.collection = (
-            self.chroma.get_collection()
+            self.client.get_collection()
         )
-
-    # ========================================================
-    # RESET
-    # ========================================================
 
     def reset(self) -> None:
         """
-        Completely recreate the collection.
-
-        Used during initial dataset ingestion.
+        Delete and recreate the historical incident collection.
         """
 
         self.collection = (
-            self.chroma.recreate_collection()
+            self.client.recreate_collection()
         )
-
-    # ========================================================
-    # COUNT
-    # ========================================================
-
-    def count(self) -> int:
-        """
-        Return the number of stored incidents.
-        """
-
-        return self.collection.count()
-
-    # ========================================================
-    # ADD INCIDENTS
-    # ========================================================
 
     def add_records(
         self,
@@ -85,132 +51,58 @@ class IncidentVectorRepository:
         metadatas: list[dict[str, Any]],
     ) -> None:
         """
-        Insert or update incident vectors.
+        Add incident records to ChromaDB.
         """
+
+        if not (
+            len(ids)
+            == len(documents)
+            == len(embeddings)
+            == len(metadatas)
+        ):
+            raise ValueError(
+                "ids, documents, embeddings, and "
+                "metadatas must have the same length."
+            )
 
         if not ids:
             return
 
-        lengths = {
-            len(ids),
-            len(documents),
-            len(embeddings),
-            len(metadatas),
-        }
-
-        if len(lengths) != 1:
-
-            raise ValueError(
-                "ids, documents, embeddings and "
-                "metadatas must contain the same "
-                "number of records."
-            )
-
-        # ----------------------------------------------------
-        # Validate embeddings
-        # ----------------------------------------------------
-
-        for index, embedding in enumerate(
-            embeddings
-        ):
-
-            if len(embedding) != (
-                EMBEDDING_DIMENSION
-            ):
-
-                raise ValueError(
-                    f"Embedding at index {index} "
-                    f"has dimension "
-                    f"{len(embedding)}. "
-                    f"Expected "
-                    f"{EMBEDDING_DIMENSION}."
-                )
-
-        # ----------------------------------------------------
-        # ChromaDB upsert
-        # ----------------------------------------------------
-
-        self.collection.upsert(
+        self.collection.add(
             ids=ids,
             documents=documents,
             embeddings=embeddings,
             metadatas=metadatas,
         )
 
-    # ========================================================
-    # QUERY
-    # ========================================================
+    def count(self) -> int:
+        """
+        Return the number of incidents stored
+        in the current collection.
+        """
+
+        return self.collection.count()
 
     def query(
         self,
         query_embedding: list[float],
-        top_k: int = DEFAULT_TOP_K,
+        top_k: int = 20,
     ) -> dict[str, Any]:
         """
-        Search historical incidents using cosine similarity.
+        Query the most similar historical incidents.
         """
-
-        if len(query_embedding) != (
-            EMBEDDING_DIMENSION
-        ):
-
-            raise ValueError(
-                "Query embedding must have "
-                f"{EMBEDDING_DIMENSION} dimensions. "
-                f"Received "
-                f"{len(query_embedding)}."
-            )
-
-        collection_count = (
-            self.collection.count()
-        )
-
-        if collection_count == 0:
-
-            raise RuntimeError(
-                "ChromaDB collection is empty. "
-                "Run populate_vector_db.py first."
-            )
 
         if top_k <= 0:
-
             raise ValueError(
-                "top_k must be greater than zero."
+                "top_k must be greater than 0."
             )
 
-        top_k = min(
-            top_k,
-            collection_count,
-        )
+        if not query_embedding:
+            raise ValueError(
+                "query_embedding must not be empty."
+            )
 
         return self.collection.query(
-            query_embeddings=[
-                query_embedding
-            ],
+            query_embeddings=[query_embedding],
             n_results=top_k,
-            include=[
-                "documents",
-                "metadatas",
-                "distances",
-            ],
         )
-
-    # ========================================================
-    # GET BY ID
-    # ========================================================
-
-    def get_by_id(
-        self,
-        incident_id: str,
-    ) -> dict[str, Any]:
-
-        result = self.collection.get(
-            ids=[incident_id],
-            include=[
-                "documents",
-                "metadatas",
-                "embeddings",
-            ],
-        )
-
-        return result

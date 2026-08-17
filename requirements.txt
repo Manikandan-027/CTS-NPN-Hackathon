@@ -1,39 +1,77 @@
-# AI Incident RCA & Resolution Intelligence System
-# Recommended Python: 3.10 - 3.12
-#
-# Install:
-#   python -m pip install --upgrade pip
-#   pip install -r requirements.txt
+# ============================================================
+# AI INCIDENT RCA & RESOLUTION INTELLIGENCE SYSTEM
+# Python: 3.12
+# Create conda environment:
+# conda create -n ai-incident-rca python=3.12
+# ============================================================
 
-# Data Processing
-pandas>=2.2,<3
-numpy>=1.26,<3
+# ------------------------------------------------------------
+# CORE DATA PROCESSING
+# ------------------------------------------------------------
+numpy==1.26.4
+pandas==2.2.3
+scikit-learn==1.6.1
 
-# NLP / Tokenization / Embeddings
-transformers>=4.45,<6
-sentence-transformers>=3.0,<6
-torch>=2.2,<3
-tqdm>=4.66,<5
+# ------------------------------------------------------------
+# DEEP LEARNING / EMBEDDINGS
+# ------------------------------------------------------------
+# CPU-compatible PyTorch stack.
+# Do NOT add tensorflow, tensorflow-intel, torchvision,
+# or torchaudio to this project.
+torch==2.6.0
 
-# Vector Database
-chromadb>=0.5,<2
+# ------------------------------------------------------------
+# NLP / TOKENIZATION / SENTENCE EMBEDDINGS
+# ------------------------------------------------------------
+sentence-transformers==3.4.1
+transformers==4.48.3
+tokenizers==0.21.0
+huggingface-hub==0.27.1
+safetensors==0.5.3
 
-# Similarity / Retrieval / Evaluation
-scikit-learn>=1.4,<2
+# ------------------------------------------------------------
+# VECTOR DATABASE
+# ------------------------------------------------------------
+chromadb==1.3.6
 
-# Backend API
-Flask>=3.0,<4
-Flask-Cors>=4.0,<7
+# ------------------------------------------------------------
+# API / BACKEND
+# ------------------------------------------------------------
+fastapi==0.116.1
+uvicorn[standard]==0.35.0
+pydantic==2.11.7
+python-multipart==0.0.20
 
-# Configuration
-python-dotenv>=1.0,<2
+# ------------------------------------------------------------
+# HTTP / API CLIENT
+# ------------------------------------------------------------
+httpx==0.28.1
+groq==1.6.0
+requests==2.32.4
 
-# HTTP utilities
-requests>=2.31,<3
+# ------------------------------------------------------------
+# CONFIGURATION / ENVIRONMENT
+# ------------------------------------------------------------
+python-dotenv==1.1.1
 
-# Local LLM integration
-# Ollama itself must be installed separately as a desktop/server application.
-ollama>=0.3,<1
+# ------------------------------------------------------------
+# RAG / TEXT UTILITIES
+# ------------------------------------------------------------
+tiktoken==0.9.0
 
-# Testing
-pytest>=8.0,<9
+# ------------------------------------------------------------
+# DATABASE
+# ------------------------------------------------------------
+psycopg[binary]>=3.2,<4
+
+# ------------------------------------------------------------
+# TESTING
+# ------------------------------------------------------------
+pytest==8.4.1
+pytest-asyncio==1.1.0
+
+# ------------------------------------------------------------
+# CODE QUALITY
+# ------------------------------------------------------------
+black==25.1.0
+ruff==0.12.7

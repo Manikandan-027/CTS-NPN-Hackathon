@@ -1,0 +1,14 @@
+{
+    "incident_id": "DEMO-20260816-C0487E61",
+    "scenario_reference": "RCA-00084",
+    "service": "Payment API",
+    "environment": "Production",
+    "error_code": "HTTP 503",
+    "error_message": "HTTP 503: Payment service is temporarily unavailable.",
+    "customer": "Demo Customer",
+    "amount": 4999.0,
+    "timestamp": "2026-08-16T07:00:54.127949+00:00",
+    "request_id": "REQ-4FFEC4D7200F",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}

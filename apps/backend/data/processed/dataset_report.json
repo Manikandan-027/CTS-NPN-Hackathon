@@ -1,0 +1,73 @@
+{
+  "rows": 8000,
+  "columns": 14,
+  "column_names": [
+    "incident_id",
+    "incident_description",
+    "category",
+    "severity",
+    "priority",
+    "affected_service",
+    "environment",
+    "root_cause",
+    "resolution",
+    "preventive_action",
+    "timestamp",
+    "status",
+    "source_type",
+    "dataset_features"
+  ],
+  "unique_incident_ids": 8000,
+  "missing_values_total": 0,
+  "unique_descriptions": 2304,
+  "category_counts": {
+    "API / Microservices": 500,
+    "Application / Software": 500,
+    "Business Continuity / Disaster Recovery": 500,
+    "Business Process / Configuration": 500,
+    "Capacity / Performance Management": 500,
+    "Data / Data Pipeline": 500,
+    "Database": 500,
+    "Deployment / Change Management": 500,
+    "External Dependencies": 500,
+    "Human / Operational": 500,
+    "Infrastructure": 500,
+    "Monitoring / Observability": 500,
+    "Network": 500,
+    "Security": 500,
+    "Testing / Quality": 500,
+    "User / Customer Incident": 500
+  },
+  "severity_counts": {
+    "Critical": 460,
+    "High": 2082,
+    "Low": 1556,
+    "Medium": 3902
+  },
+  "environment_counts": {
+    "Development": 319,
+    "Production": 6484,
+    "Staging": 579,
+    "UAT": 618
+  },
+  "service_count": 84,
+  "root_cause_count": 65,
+  "resolution_count": 86,
+  "preventive_action_count": 4,
+  "status_counts": {
+    "Closed": 3246,
+    "Investigating": 1545,
+    "Resolved": 3209
+  },
+  "source_type_counts": {
+    "Alert": 1568,
+    "Email": 377,
+    "Log": 1610,
+    "Monitoring": 2213,
+    "Security Event": 116,
+    "Service Desk": 376,
+    "Ticket": 1740
+  },
+  "timestamp_min": "2024-01-01T05:34:44",
+  "timestamp_max": "2026-06-19T15:33:58"
+}

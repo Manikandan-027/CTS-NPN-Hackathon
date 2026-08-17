@@ -1,0 +1,33 @@
+{
+  "project": "Evidence-Based AI Incident RCA & Resolution Intelligence System",
+  "model": "sentence-transformers/all-MiniLM-L6-v2",
+  "embedding_dimension": 384,
+  "incident_count": 8000,
+  "final_embedding_count": 8000,
+  "chunk_count": 8000,
+  "chunked_incident_count": 0,
+  "chunk_size": 200,
+  "chunk_overlap": 40,
+  "normalization": "L2",
+  "aggregation": "token-count-weighted mean pooling",
+  "one_vector_per_incident": true,
+  "embedding_input_policy": "Incident description, categorical context and observed technical signals",
+  "label_leakage_protection": [
+    "root_cause",
+    "resolution",
+    "preventive_action"
+  ],
+  "diversity": {
+    "total_incidents": 8000,
+    "unique_embedding_texts": 6482,
+    "duplicate_embedding_texts": 1518,
+    "text_uniqueness_percent": 81.03,
+    "unique_embeddings": 6604,
+    "duplicate_embeddings": 1396,
+    "embedding_uniqueness_percent": 82.55
+  },
+  "min_token_count": 121,
+  "max_token_count": 192,
+  "mean_token_count": 149.338125,
+  "median_token_count": 155.0
+}
