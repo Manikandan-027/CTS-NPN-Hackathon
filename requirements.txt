@@ -3,6 +3,7 @@
 # Python: 3.12
 # Create conda environment:
 # conda create -n ai-incident-rca python=3.12
+# conda activate ai-incident-rca
 # ============================================================
 
 # ------------------------------------------------------------
