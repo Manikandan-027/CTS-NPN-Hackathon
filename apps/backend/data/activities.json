@@ -1,0 +1,3686 @@
+[
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "New code investigation and suggested solution were stored for future incidents.",
+    "incident_id": 1,
+    "metadata": {
+      "file_path": "src/rate_limiter.py",
+      "line_start": 7
+    },
+    "created_at": "2026-08-16T11:24:06.828064+00:00"
+  },
+  {
+    "activity_type": "DEMO_HISTORY_SEEDED",
+    "message": "Sample demo history seeded. The sample application can demonstrate the known-incident path.",
+    "incident_id": 1,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\sample_code_project",
+      "service": "sample-api",
+      "route": "/products"
+    },
+    "created_at": "2026-08-16T11:24:06.829063+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Production incident received by the RCA API.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "GET /products returns HTTP 429 Too Many Requests immediately for a new user",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\sample_code_project",
+      "repository_name": "sample_code_project",
+      "service": "sample-api",
+      "route": "/products",
+      "incident_id": null,
+      "error_code": null,
+      "error_message": null
+    },
+    "created_at": "2026-08-16T11:25:05.220848+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK",
+    "message": "Checking persistent incident history before code investigation.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\sample_code_project",
+      "service": "sample-api",
+      "route": "/products"
+    },
+    "created_at": "2026-08-16T11:25:05.221848+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MATCH",
+    "message": "Existing incident matched by exact fingerprint; repository investigation was skipped.",
+    "incident_id": 1,
+    "metadata": {
+      "match_type": "fingerprint"
+    },
+    "created_at": "2026-08-16T11:25:05.222847+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Searching ChromaDB for historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "top_k": 5,
+      "repository": "sample_code_project"
+    },
+    "created_at": "2026-08-16T11:25:05.223849+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_COMPLETED",
+    "message": "Retrieved 5 historical incidents from ChromaDB.",
+    "incident_id": null,
+    "metadata": {
+      "count": 5,
+      "repository": "sample_code_project"
+    },
+    "created_at": "2026-08-16T11:25:05.715853+00:00"
+  },
+  {
+    "activity_type": "SUPPORT_NOTIFICATION",
+    "message": "Support-engineer response generated and made available on the support dashboard.",
+    "incident_id": 1,
+    "metadata": {
+      "action": "REUSE_PREVIOUS_SOLUTION",
+      "incident_status": "KNOWN",
+      "repository": "sample_code_project"
+    },
+    "created_at": "2026-08-16T11:25:05.717857+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Production incident received by the RCA API.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "GET /products returns HTTP 429 Too Many Requests immediately for a new user",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\sample_code_project",
+      "repository_name": "sample_code_project",
+      "service": "sample-api",
+      "route": "/products",
+      "incident_id": null,
+      "error_code": null,
+      "error_message": null
+    },
+    "created_at": "2026-08-16T11:25:37.632948+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK",
+    "message": "Checking persistent incident history before code investigation.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\sample_code_project",
+      "service": "sample-api",
+      "route": "/products"
+    },
+    "created_at": "2026-08-16T11:25:37.633941+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MATCH",
+    "message": "Existing incident matched by exact fingerprint; repository investigation was skipped.",
+    "incident_id": 1,
+    "metadata": {
+      "match_type": "fingerprint"
+    },
+    "created_at": "2026-08-16T11:25:37.635946+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Searching ChromaDB for historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "top_k": 5,
+      "repository": "sample_code_project"
+    },
+    "created_at": "2026-08-16T11:25:37.636944+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_COMPLETED",
+    "message": "Retrieved 5 historical incidents from ChromaDB.",
+    "incident_id": null,
+    "metadata": {
+      "count": 5,
+      "repository": "sample_code_project"
+    },
+    "created_at": "2026-08-16T11:25:37.654941+00:00"
+  },
+  {
+    "activity_type": "SUPPORT_NOTIFICATION",
+    "message": "Support-engineer response generated and made available on the support dashboard.",
+    "incident_id": 1,
+    "metadata": {
+      "action": "REUSE_PREVIOUS_SOLUTION",
+      "incident_status": "KNOWN",
+      "repository": "sample_code_project"
+    },
+    "created_at": "2026-08-16T11:25:37.655940+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Production incident received by the RCA API.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment request failed with HTTP 401. Observed error: HTTP 401: Payment failed. Authentication dependency credentials are expired.",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "repository_name": "demo-payment-service",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "incident_id": "DEMO-20260816-1060AF75",
+      "error_code": "HTTP 401",
+      "error_message": "HTTP 401: Payment failed. Authentication dependency credentials are expired."
+    },
+    "created_at": "2026-08-16T11:38:26.333219+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK",
+    "message": "Checking persistent incident history before code investigation.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment"
+    },
+    "created_at": "2026-08-16T11:38:26.335221+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_FAILED",
+    "message": "Incident RCA pipeline failed.",
+    "incident_id": null,
+    "metadata": {
+      "error": "'IncidentHistoryRepository' object has no attribute 'find_by_signature'",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "incident": "Payment request failed with HTTP 401. Observed error: HTTP 401: Payment failed. Authentication dependency credentials are expired."
+    },
+    "created_at": "2026-08-16T11:38:26.340219+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Production incident received by the RCA API.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment request failed with HTTP 401. Observed error: HTTP 401: Payment failed. Authentication dependency credentials are expired.",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "repository_name": "demo-payment-service",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "incident_id": "DEMO-20260816-8E703E5E",
+      "error_code": "HTTP 401",
+      "error_message": "HTTP 401: Payment failed. Authentication dependency credentials are expired."
+    },
+    "created_at": "2026-08-16T11:38:49.816969+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK",
+    "message": "Checking persistent incident history before code investigation.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment"
+    },
+    "created_at": "2026-08-16T11:38:49.817976+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_FAILED",
+    "message": "Incident RCA pipeline failed.",
+    "incident_id": null,
+    "metadata": {
+      "error": "'IncidentHistoryRepository' object has no attribute 'find_by_signature'",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "incident": "Payment request failed with HTTP 401. Observed error: HTTP 401: Payment failed. Authentication dependency credentials are expired."
+    },
+    "created_at": "2026-08-16T11:38:49.818976+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Production incident received by the RCA API.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment request failed with HTTP 503. Observed error: HTTP 503: Payment service is temporarily unavailable.",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "repository_name": "demo-payment-service",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "incident_id": "DEMO-20260816-D0187EA8",
+      "error_code": "HTTP 503",
+      "error_message": "HTTP 503: Payment service is temporarily unavailable."
+    },
+    "created_at": "2026-08-16T11:39:42.280200+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK",
+    "message": "Checking persistent incident history before code investigation.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment"
+    },
+    "created_at": "2026-08-16T11:39:42.281202+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_FAILED",
+    "message": "Incident RCA pipeline failed.",
+    "incident_id": null,
+    "metadata": {
+      "error": "'IncidentHistoryRepository' object has no attribute 'find_by_signature'",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\demo-payment-service",
+      "incident": "Payment request failed with HTTP 503. Observed error: HTTP 503: Payment service is temporarily unavailable."
+    },
+    "created_at": "2026-08-16T11:39:42.285686+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Production incident received by the RCA API.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "POST /api/demo/payment returns HTTP 503 Payment Service Unavailable for a payment request",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+      "repository_name": "demo-payment-service",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "incident_id": null,
+      "error_code": "HTTP 503",
+      "error_message": "Demo payment incident: payment service is temporarily unavailable."
+    },
+    "created_at": "2026-08-16T11:53:19.423473+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK",
+    "message": "Checking persistent incident history before code investigation.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment"
+    },
+    "created_at": "2026-08-16T11:53:19.424478+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_FAILED",
+    "message": "Incident RCA pipeline failed.",
+    "incident_id": null,
+    "metadata": {
+      "error": "'IncidentHistoryRepository' object has no attribute 'find_by_signature'",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+      "incident": "POST /api/demo/payment returns HTTP 503 Payment Service Unavailable for a payment request"
+    },
+    "created_at": "2026-08-16T11:53:19.427810+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "POST /api/demo/payment returns HTTP 401 Payment Failed for a payment request",
+      "incident_id": null,
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+      "error_code": "HTTP 401"
+    },
+    "created_at": "2026-08-16T13:28:16.439679+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 1
+    },
+    "created_at": "2026-08-16T13:28:16.446668+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T13:28:16.449669+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MISS",
+    "message": "No previous solved incident matched; code investigation is required.",
+    "incident_id": null,
+    "metadata": {
+      "fingerprint": "282990209847617f5c43716ef3bbdd25edbe4720d16218f25107bfc0ec241001",
+      "error_signature": "401|api|demo|http|payment|post"
+    },
+    "created_at": "2026-08-16T13:28:16.453197+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T13:28:16.456189+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T13:28:16.461186+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T13:28:16.464192+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-16T13:28:50.029878+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 5 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 5
+    },
+    "created_at": "2026-08-16T13:28:50.031876+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Historical incidents analyzed for likely root cause.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "expired credentials were configured for the authentication dependency"
+    },
+    "created_at": "2026-08-16T13:28:50.032874+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository scanned. Found 12 relevant findings.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+      "findings": 12
+    },
+    "created_at": "2026-08-16T13:28:50.033874+00:00"
+  },
+  {
+    "activity_type": "LLM_RCA_COMPLETED",
+    "message": "Code-aware LLM generated the final RCA.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "demo-payment-service/app.py",
+      "line_start": 78,
+      "line_end": 78,
+      "confidence": 0.6
+    },
+    "created_at": "2026-08-16T13:28:50.034874+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "New code investigation and suggested solution were stored for future incidents.",
+    "incident_id": 2,
+    "metadata": {
+      "file_path": "demo-payment-service/app.py",
+      "line_start": 78
+    },
+    "created_at": "2026-08-16T13:28:50.039383+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "Complete RCA result saved for human validation.",
+    "incident_id": 2,
+    "metadata": {
+      "file_path": "demo-payment-service/app.py",
+      "line_start": 78,
+      "confidence": 0.6
+    },
+    "created_at": "2026-08-16T13:28:50.040402+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer must validate the generated RCA before applying the fix.",
+    "incident_id": 2,
+    "metadata": {},
+    "created_at": "2026-08-16T13:28:50.041392+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 400 HTTP 400: Payment request payload validation failed. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-753F64C6",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+      "error_code": "HTTP 400"
+    },
+    "created_at": "2026-08-16T13:36:50.974534+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 2
+    },
+    "created_at": "2026-08-16T13:36:50.980533+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T13:36:50.983541+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MISS",
+    "message": "No previous solved incident matched; code investigation is required.",
+    "incident_id": null,
+    "metadata": {
+      "fingerprint": "09938a26bbda770770b6b99e5f0b9ad1b8863a872187d5ae4ecc38226e64c9a0",
+      "error_signature": "400|api|clicked|customer|http|now|pay|payload|payment|returned|validation|when"
+    },
+    "created_at": "2026-08-16T13:36:50.988541+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T13:36:50.990531+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T13:36:50.992532+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T13:36:50.994533+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-16T13:37:00.710084+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 5 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 5
+    },
+    "created_at": "2026-08-16T13:37:00.712083+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Historical incidents analyzed for likely root cause.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "The Payment API returned HTTP 400 because the incoming request payload failed validation in the payment_service.py logic. This indicates that the client submitted a payload that did not meet the required schema, causing the validation guard to reject it with a 400 response."
+    },
+    "created_at": "2026-08-16T13:37:00.714095+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository scanned. Found 12 relevant findings.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+      "findings": 12
+    },
+    "created_at": "2026-08-16T13:37:00.716832+00:00"
+  },
+  {
+    "activity_type": "LLM_RCA_COMPLETED",
+    "message": "Code-aware LLM generated the final RCA.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "demo-se/src/payment/payment_service.py",
+      "line_start": 131,
+      "line_end": 131,
+      "confidence": 0.8
+    },
+    "created_at": "2026-08-16T13:37:00.717844+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "New code investigation and suggested solution were stored for future incidents.",
+    "incident_id": 3,
+    "metadata": {
+      "file_path": "demo-se/src/payment/payment_service.py",
+      "line_start": 131
+    },
+    "created_at": "2026-08-16T13:37:00.720840+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "Complete RCA result saved for human validation.",
+    "incident_id": 3,
+    "metadata": {
+      "file_path": "demo-se/src/payment/payment_service.py",
+      "line_start": 131,
+      "confidence": 0.8
+    },
+    "created_at": "2026-08-16T13:37:00.721852+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer must validate the generated RCA before applying the fix.",
+    "incident_id": 3,
+    "metadata": {},
+    "created_at": "2026-08-16T13:37:00.724840+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED_STARTED",
+    "message": "Incident received from demo-payment-service. Started.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T14:39:06.275447+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Production payment incident received by RCA backend.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 404 HTTP 404: Payment API endpoint was not found. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-536AA421",
+      "error_code": "HTTP 404",
+      "error_message": "HTTP 404: Payment API endpoint was not found.",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T14:39:06.278496+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED_COMPLETED",
+    "message": "Incident received from demo-payment-service.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "DEMO-20260816-536AA421",
+      "error_code": "HTTP 404"
+    },
+    "created_at": "2026-08-16T14:39:06.280508+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_STORED_STARTED",
+    "message": "Customer query and incident metadata stored. Started.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T14:39:06.282505+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_STORED",
+    "message": "Customer query stored with the incident.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query": "My payment failed",
+      "customer": "Demo Customer",
+      "amount": 4999.0,
+      "request_id": "REQ-005F69BE7583"
+    },
+    "created_at": "2026-08-16T14:39:06.283502+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_STORED_COMPLETED",
+    "message": "Customer query and incident metadata stored.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query": "My payment failed"
+    },
+    "created_at": "2026-08-16T14:39:06.285504+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MISS",
+    "message": "No previous solved incident matched; code investigation is required.",
+    "incident_id": null,
+    "metadata": {
+      "fingerprint": "4920159fde4f01b68ec5e0b015fa9e65680f4d51fa31bee20d096ccc70f5e7ae",
+      "error_signature": "404|api|clicked|customer|endpoint|found|http|not|now|pay|payment|returned|when"
+    },
+    "created_at": "2026-08-16T14:39:06.289133+00:00"
+  },
+  {
+    "activity_type": "HISTORICAL_RETRIEVAL_STARTED",
+    "message": "Historical incidents retrieved from the RAG pipeline. Started.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T14:39:06.290140+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Searching historical incident embeddings.",
+    "incident_id": null,
+    "metadata": {
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-16T14:39:06.293143+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "retrieved_count": 20,
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-16T14:39:06.898173+00:00"
+  },
+  {
+    "activity_type": "HISTORICAL_RETRIEVAL_COMPLETED",
+    "message": "Historical incidents retrieved from the RAG pipeline.",
+    "incident_id": null,
+    "metadata": {
+      "retrieved_count": 20,
+      "top_k": 20
+    },
+    "created_at": "2026-08-16T14:39:06.900173+00:00"
+  },
+  {
+    "activity_type": "REPOSITORY_INVESTIGATION_STARTED",
+    "message": "Developer repository scanned for exact code evidence. Started.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T14:39:06.902177+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_STARTED",
+    "message": "Scanning the developer repository for exact incident evidence.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "source_type": "local"
+    },
+    "created_at": "2026-08-16T14:39:06.904176+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Repository scan completed. Found 12 relevant code findings.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "scanned_files": 46,
+      "total_lines": 2488,
+      "relevant_files": [
+        "src/payment/incident_catalog.py",
+        "src/payment/payment_service.py"
+      ],
+      "findings": [
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 167,
+          "line_end": 167,
+          "score": 155.0,
+          "matched_terms": [
+            "404",
+            "api",
+            "endpoint",
+            "http",
+            "http-404",
+            "pay",
+            "payment"
+          ],
+          "evidence": [
+            "Matched http-404: \"HTTP 404: Payment API endpoint \"",
+            "Matched payment: \"HTTP 404: Payment API endpoint \"",
+            "HTTP status code appears directly on this line.",
+            "Payment-related code and HTTP status occur together."
+          ]
+        },
+        {
+          "file_path": "src/payment/payment_service.py",
+          "line_start": 140,
+          "line_end": 140,
+          "score": 143.0,
+          "matched_terms": [
+            "404",
+            "api",
+            "endpoint",
+            "http",
+            "http-404",
+            "pay",
+            "payment"
+          ],
+          "evidence": [
+            "Matched http-404: # HTTP 404 - Payment API Endpoint Failure",
+            "Matched payment: # HTTP 404 - Payment API Endpoint Failure",
+            "HTTP status code appears directly on this line.",
+            "Payment-related code and HTTP status occur together."
+          ]
+        },
+        {
+          "file_path": "src/payment/payment_service.py",
+          "line_start": 148,
+          "line_end": 148,
+          "score": 143.0,
+          "matched_terms": [
+            "404",
+            "api",
+            "endpoint",
+            "http",
+            "http-404",
+            "pay",
+            "payment"
+          ],
+          "evidence": [
+            "Matched http-404: \"HTTP 404: Payment API endpoint \"",
+            "Matched payment: \"HTTP 404: Payment API endpoint \"",
+            "HTTP status code appears directly on this line.",
+            "Payment-related code and HTTP status occur together."
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 164,
+          "line_end": 164,
+          "score": 128.0,
+          "matched_terms": [
+            "404",
+            "http",
+            "http-404"
+          ],
+          "evidence": [
+            "Matched http-404: \"error_code\": \"HTTP 404\",",
+            "HTTP status code appears directly on this line."
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 173,
+          "line_end": 173,
+          "score": 128.0,
+          "matched_terms": [
+            "404",
+            "http",
+            "http-404"
+          ],
+          "evidence": [
+            "Matched http-404: \"indicated HTTP 404 errors on \"",
+            "HTTP status code appears directly on this line."
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 160,
+          "line_end": 160,
+          "score": 122.0,
+          "matched_terms": [
+            "api",
+            "endpoint",
+            "not",
+            "not_found",
+            "pay",
+            "payment"
+          ],
+          "evidence": [
+            "Matched payment: \"title\": \"Payment API Endpoint Not Found\","
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 35,
+          "line_end": 35,
+          "score": 117.0,
+          "matched_terms": [
+            "api",
+            "authentication",
+            "pay",
+            "payment"
+          ],
+          "evidence": [
+            "Matched payment: \"title\": \"Payment API Authentication Failure\",",
+            "Matched authentication: \"title\": \"Payment API Authentication Failure\","
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 96,
+          "line_end": 96,
+          "score": 117.0,
+          "matched_terms": [
+            "api",
+            "pay",
+            "payment",
+            "timeout"
+          ],
+          "evidence": [
+            "Matched payment: \"title\": \"Payment Gateway External API Timeout\",",
+            "Matched timeout: \"title\": \"Payment Gateway External API Timeout\","
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 127,
+          "line_end": 127,
+          "score": 117.0,
+          "matched_terms": [
+            "api",
+            "pay",
+            "payment",
+            "validation"
+          ],
+          "evidence": [
+            "Matched payment: \"Payment API Request Payload \"",
+            "Matched validation: \"Payment API Request Payload \""
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 136,
+          "line_end": 136,
+          "score": 117.0,
+          "matched_terms": [
+            "http",
+            "pay",
+            "payment",
+            "validation"
+          ],
+          "evidence": [
+            "Matched payment: \"HTTP 400: Payment request payload \"",
+            "Matched validation: \"HTTP 400: Payment request payload \""
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 49,
+          "line_end": 49,
+          "score": 116.0,
+          "matched_terms": [
+            "api",
+            "http",
+            "pay",
+            "payment"
+          ],
+          "evidence": [
+            "Matched payment: \"HTTP 401 errors in the Payment API.\""
+          ]
+        },
+        {
+          "file_path": "src/payment/incident_catalog.py",
+          "line_start": 162,
+          "line_end": 162,
+          "score": 116.0,
+          "matched_terms": [
+            "api",
+            "endpoint",
+            "pay",
+            "payment"
+          ],
+          "evidence": [
+            "Matched payment: \"name\": \"Payment API Endpoint Failure\","
+          ]
+        }
+      ]
+    },
+    "created_at": "2026-08-16T14:39:08.174601+00:00"
+  },
+  {
+    "activity_type": "REPOSITORY_INVESTIGATION_COMPLETED",
+    "message": "Developer repository scanned for exact code evidence.",
+    "incident_id": null,
+    "metadata": {
+      "scanned_files": 46,
+      "relevant_files": [
+        "src/payment/incident_catalog.py",
+        "src/payment/payment_service.py"
+      ],
+      "findings": 12,
+      "exact_locations": [
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line": 167
+        },
+        {
+          "file": "src/payment/payment_service.py",
+          "line": 140
+        },
+        {
+          "file": "src/payment/payment_service.py",
+          "line": 148
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line": 164
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line": 173
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line": 160
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line": 35
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line": 96
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line": 127
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line": 136
+        }
+      ]
+    },
+    "created_at": "2026-08-16T14:39:08.176599+00:00"
+  },
+  {
+    "activity_type": "QWEN_RESOLUTION_STARTED",
+    "message": "Qwen code-aware LLM generated the project-specific resolution. Started.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T14:39:08.178599+00:00"
+  },
+  {
+    "activity_type": "QWEN_RCA_STARTED",
+    "message": "Sending historical evidence and current repository evidence to Qwen.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T14:39:08.180598+00:00"
+  },
+  {
+    "activity_type": "QWEN_RCA_COMPLETED",
+    "message": "Qwen generated the code-aware RCA and resolution.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "The Payment API endpoint was not registered or was removed, causing the service to return HTTP 404 when the client attempted to call it.",
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 167,
+      "line_end": 167,
+      "confidence": 0.9,
+      "suggested_fix": "Verify that the route for the Payment API (e.g., \"/payment\" or the appropriate endpoint) is correctly defined and registered in the service’s router. If a recent deployment or configuration change removed the endpoint, revert the change or add the missing route back. After updating, redeploy and confirm that the endpoint responds with a 200 status code."
+    },
+    "created_at": "2026-08-16T14:39:12.391584+00:00"
+  },
+  {
+    "activity_type": "QWEN_RESOLUTION_COMPLETED",
+    "message": "Qwen code-aware LLM generated the project-specific resolution.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 167,
+      "line_end": 167,
+      "confidence": 0.9,
+      "root_cause": "The Payment API endpoint was not registered or was removed, causing the service to return HTTP 404 when the client attempted to call it."
+    },
+    "created_at": "2026-08-16T14:39:12.395101+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "New code investigation and suggested solution were stored for future incidents.",
+    "incident_id": 4,
+    "metadata": {
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 167
+    },
+    "created_at": "2026-08-16T14:39:12.399102+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_STARTED",
+    "message": "Root cause determined using historical and current-code evidence. Started.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T14:39:12.404098+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Root cause analysis completed using historical and current-code evidence.",
+    "incident_id": 4,
+    "metadata": {
+      "root_cause": "The Payment API endpoint was not registered or was removed, causing the service to return HTTP 404 when the client attempted to call it.",
+      "confidence": 0.9,
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 167,
+      "line_end": 167
+    },
+    "created_at": "2026-08-16T14:39:12.407102+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Root cause determined using historical and current-code evidence.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "The Payment API endpoint was not registered or was removed, causing the service to return HTTP 404 when the client attempted to call it.",
+      "confidence": 0.9,
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 167,
+      "line_end": 167
+    },
+    "created_at": "2026-08-16T14:39:12.409100+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANKING_COMPLETED",
+    "message": "Historical evidence ranking completed. The most relevant historical incidents were selected for RCA.",
+    "incident_id": 4,
+    "metadata": {
+      "historical_evidence": [
+        {
+          "id": "RCA-00436",
+          "similarity": 0.694096,
+          "incident_description": "Monitoring and support tickets indicated http 404 errors on the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Critical",
+          "priority": "P4",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an underlying system component or configuration did not behave according to the expected operating conditions",
+          "resolution": "Applied the required fix, monitored the service during recovery, and confirmed that error rates returned to the expected range.",
+          "preventive_action": "Add automated health checks, monitoring alerts, and regression validation for the affected scenario.",
+          "source_type": "Ticket"
+        },
+        {
+          "id": "RCA-07689",
+          "similarity": 0.694096,
+          "incident_description": "Monitoring and support tickets indicated http 404 errors on the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "High",
+          "priority": "P3",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an underlying system component or configuration did not behave according to the expected operating conditions",
+          "resolution": "Applied the required fix, monitored the service during recovery, and confirmed that error rates returned to the expected range.",
+          "preventive_action": "Add automated health checks, monitoring alerts, and regression validation for the affected scenario.",
+          "source_type": "Ticket"
+        },
+        {
+          "id": "RCA-00929",
+          "similarity": 0.692705,
+          "incident_description": "Support received multiple reports of http 404 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Medium",
+          "priority": "P4",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an underlying system component or configuration did not behave according to the expected operating conditions",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add automated health checks, monitoring alerts, and regression validation for the affected scenario.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-06963",
+          "similarity": 0.692705,
+          "incident_description": "Support received multiple reports of http 404 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Medium",
+          "priority": "P3",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an underlying system component or configuration did not behave according to the expected operating conditions",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add automated health checks, monitoring alerts, and regression validation for the affected scenario.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-07669",
+          "similarity": 0.692705,
+          "incident_description": "Support received multiple reports of http 404 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Medium",
+          "priority": "P3",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an underlying system component or configuration did not behave according to the expected operating conditions",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add automated health checks, monitoring alerts, and regression validation for the affected scenario.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-00017",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Critical",
+          "priority": "P3",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-00239",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Low",
+          "priority": "P2",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-00538",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Low",
+          "priority": "P4",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-01846",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Low",
+          "priority": "P2",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-02018",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Medium",
+          "priority": "P4",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-02989",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Medium",
+          "priority": "P4",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-05510",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Low",
+          "priority": "P2",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-05896",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Low",
+          "priority": "P2",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-06298",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "High",
+          "priority": "P4",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-07796",
+          "similarity": 0.596371,
+          "incident_description": "Support received multiple reports of http 401 errors in the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "High",
+          "priority": "P3",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "expired credentials were configured for the authentication dependency",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Add a specific monitoring threshold and runbook so support engineers can detect the condition earlier.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-00084",
+          "similarity": 0.596328,
+          "incident_description": "Users reported api unavailable affecting the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "High",
+          "priority": "P3",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an application dependency became unavailable",
+          "resolution": "Applied the required fix, monitored the service during recovery, and confirmed that error rates returned to the expected range.",
+          "preventive_action": "Introduce pre-production validation and automated configuration checks before future production changes.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-03105",
+          "similarity": 0.596328,
+          "incident_description": "Users reported api unavailable affecting the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Medium",
+          "priority": "P2",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an application dependency became unavailable",
+          "resolution": "Applied the required fix, monitored the service during recovery, and confirmed that error rates returned to the expected range.",
+          "preventive_action": "Introduce pre-production validation and automated configuration checks before future production changes.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-05102",
+          "similarity": 0.596328,
+          "incident_description": "Users reported api unavailable affecting the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "High",
+          "priority": "P1",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an application dependency became unavailable",
+          "resolution": "Applied the required fix, monitored the service during recovery, and confirmed that error rates returned to the expected range.",
+          "preventive_action": "Introduce pre-production validation and automated configuration checks before future production changes.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-06879",
+          "similarity": 0.596328,
+          "incident_description": "Users reported api unavailable affecting the Payment API. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "Medium",
+          "priority": "P4",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "an application dependency became unavailable",
+          "resolution": "Applied the required fix, monitored the service during recovery, and confirmed that error rates returned to the expected range.",
+          "preventive_action": "Introduce pre-production validation and automated configuration checks before future production changes.",
+          "source_type": "Monitoring"
+        },
+        {
+          "id": "RCA-07612",
+          "similarity": 0.5905,
+          "incident_description": "The Payment API experienced an incident associated with http 403 errors. The issue was observed in the Production environment. Initial investigation showed degraded behavior and the support team collected logs, metrics, and transaction evidence for analysis.",
+          "category": "API / Microservices",
+          "severity": "High",
+          "priority": "P3",
+          "affected_service": "Payment API",
+          "environment": "Production",
+          "root_cause": "a role mapping change removed the required authorization",
+          "resolution": "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.",
+          "preventive_action": "Introduce pre-production validation and automated configuration checks before future production changes.",
+          "source_type": "Log"
+        }
+      ],
+      "action": "INVESTIGATE_AND_SAVE"
+    },
+    "created_at": "2026-08-16T14:39:12.413112+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANKING_COMPLETED",
+    "message": "Historical incidents ranked and the most relevant incidents selected.",
+    "incident_id": null,
+    "metadata": {
+      "message": "Historical incidents ranked and relevant evidence selected."
+    },
+    "created_at": "2026-08-16T14:39:12.417102+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_PENDING",
+    "message": "RCA result is ready for human validation.",
+    "incident_id": null,
+    "metadata": {
+      "message": "Human engineer must validate the RCA before the fix is applied."
+    },
+    "created_at": "2026-08-16T14:39:12.420102+00:00"
+  },
+  {
+    "activity_type": "SUPPORT_NOTIFICATION",
+    "message": "Complete RCA result is available for support/developer validation.",
+    "incident_id": 4,
+    "metadata": {
+      "action": "INVESTIGATE_AND_SAVE",
+      "incident_status": "NEW",
+      "root_cause": "The Payment API endpoint was not registered or was removed, causing the service to return HTTP 404 when the client attempted to call it.",
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 167,
+      "confidence": 0.9
+    },
+    "created_at": "2026-08-16T14:39:12.424101+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo-payment-service.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 504 HTTP 504: Payment gateway request timed out. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-A4C7347B",
+      "error_code": "HTTP 504",
+      "error_message": "HTTP 504: Payment gateway request timed out.",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T14:53:52.833639+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_STORED",
+    "message": "Customer query stored with incident.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query": "My payment failed",
+      "customer": "Demo Customer",
+      "amount": 4999.0,
+      "request_id": "REQ-D205DC6D7FD8",
+      "incident_id": "DEMO-20260816-A4C7347B"
+    },
+    "created_at": "2026-08-16T14:53:52.837641+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MISS",
+    "message": "No previous solved incident matched; code investigation is required.",
+    "incident_id": null,
+    "metadata": {
+      "fingerprint": "a68467325146bf9516199cc89adf06916335fae8496c0ca486013bc68e163de6",
+      "error_signature": "504|api|clicked|customer|gateway|http|now|out|pay|payment|returned|timed|when"
+    },
+    "created_at": "2026-08-16T14:53:52.841642+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Historical incident retrieval started.",
+    "incident_id": null,
+    "metadata": {
+      "top_k": 20
+    },
+    "created_at": "2026-08-16T14:53:52.844639+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_COMPLETED",
+    "message": "Historical incidents retrieved.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-16T14:53:53.332096+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository investigation completed.",
+    "incident_id": null,
+    "metadata": {
+      "scanned_files": 47,
+      "total_lines": 2505,
+      "relevant_files": [
+        "src/payment/incident_catalog.py",
+        "src/payment/payment_service.py"
+      ],
+      "findings": [
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 103,
+          "line_end": 103,
+          "score": 176.0,
+          "evidence": [
+            "Matched http-504: \"HTTP 504: Payment gateway request \"",
+            "Matched payment: \"HTTP 504: Payment gateway request \"",
+            "HTTP status code appears directly on this line.",
+            "Payment-related code and HTTP status occur together."
+          ]
+        },
+        {
+          "file": "src/payment/payment_service.py",
+          "line_start": 91,
+          "line_end": 91,
+          "score": 169.0,
+          "evidence": [
+            "Matched http-504: # HTTP 504 - Payment Gateway Timeout",
+            "Matched payment: # HTTP 504 - Payment Gateway Timeout",
+            "Matched timeout: # HTTP 504 - Payment Gateway Timeout",
+            "HTTP status code appears directly on this line.",
+            "Payment-related code and HTTP status occur together."
+          ]
+        },
+        {
+          "file": "src/payment/payment_service.py",
+          "line_start": 105,
+          "line_end": 105,
+          "score": 166.0,
+          "evidence": [
+            "Matched http-504: \"HTTP 504: Payment gateway request \"",
+            "Matched payment: \"HTTP 504: Payment gateway request \"",
+            "HTTP status code appears directly on this line.",
+            "Payment-related code and HTTP status occur together."
+          ]
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 100,
+          "line_end": 100,
+          "score": 149.0,
+          "evidence": [
+            "Matched http-504: \"error_code\": \"HTTP 504\",",
+            "HTTP status code appears directly on this line."
+          ]
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 96,
+          "line_end": 96,
+          "score": 143.0,
+          "evidence": [
+            "Matched payment: \"title\": \"Payment Gateway External API Timeout\",",
+            "Matched timeout: \"title\": \"Payment Gateway External API Timeout\","
+          ]
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 127,
+          "line_end": 127,
+          "score": 141.0,
+          "evidence": [
+            "Matched payment: \"Payment API Request Payload \"",
+            "Matched validation: \"Payment API Request Payload \""
+          ]
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 136,
+          "line_end": 136,
+          "score": 141.0,
+          "evidence": [
+            "Matched payment: \"HTTP 400: Payment request payload \"",
+            "Matched validation: \"HTTP 400: Payment request payload \""
+          ]
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 98,
+          "line_end": 98,
+          "score": 140.0,
+          "evidence": [
+            "Matched payment: \"name\": \"Payment Gateway Timeout\",",
+            "Matched timeout: \"name\": \"Payment Gateway Timeout\","
+          ]
+        },
+        {
+          "file": "src/payment/payment_service.py",
+          "line_start": 103,
+          "line_end": 103,
+          "score": 139.0,
+          "evidence": [
+            "Matched http-504: \"HTTP 504\",",
+            "HTTP status code appears directly on this line."
+          ]
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 35,
+          "line_end": 35,
+          "score": 138.0,
+          "evidence": [
+            "Matched payment: \"title\": \"Payment API Authentication Failure\",",
+            "Matched authentication: \"title\": \"Payment API Authentication Failure\","
+          ]
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 131,
+          "line_end": 131,
+          "score": 138.0,
+          "evidence": [
+            "Matched payment: \"name\": \"Invalid Payment Request\",",
+            "Matched validation: \"name\": \"Invalid Payment Request\","
+          ]
+        },
+        {
+          "file": "src/payment/incident_catalog.py",
+          "line_start": 49,
+          "line_end": 49,
+          "score": 137.0,
+          "evidence": [
+            "Matched payment: \"HTTP 401 errors in the Payment API.\""
+          ]
+        }
+      ]
+    },
+    "created_at": "2026-08-16T14:53:54.628470+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_FAILED",
+    "message": "RCA pipeline failed.",
+    "incident_id": null,
+    "metadata": {
+      "error": "Groq returned a code location that was not present in repository evidence.",
+      "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\backend\\main.py\", line 1016, in report_incident\n    response = support.handle(\n               ^^^^^^^^^^^^^^^\n  File \"C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\backend\\core\\support\\service.py\", line 30, in handle\n    decision = self.decision_engine.handle(\n               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\backend\\core\\investigation\\decision_engine.py\", line 79, in handle\n    investigation = llm_rca(\n                    ^^^^^^^^\n  File \"C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\backend\\main.py\", line 923, in llm_wrapper\n    generate_code_aware_rca(\n  File \"C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\backend\\core\\llm\\code_aware_rca.py\", line 149, in generate_code_aware_rca\n    return _validate(result, repository_evidence)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\backend\\core\\llm\\code_aware_rca.py\", line 91, in _validate\n    raise ValueError(\nValueError: Groq returned a code location that was not present in repository evidence.\n"
+    },
+    "created_at": "2026-08-16T14:53:59.386423+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Payment incident received from demo-payment-service.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "DEMO-20260816-4E6EC63C",
+      "incident": "Payment API returned HTTP HTTP 404 HTTP 404: Payment API endpoint was not found. when the customer clicked Pay Now.",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "error_code": "HTTP 404",
+      "customer_query": "My payment failed"
+    },
+    "created_at": "2026-08-16T15:04:32.196396+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_STORED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "DEMO-20260816-4E6EC63C",
+      "customer_query": "My payment failed",
+      "incident": "Payment API returned HTTP HTTP 404 HTTP 404: Payment API endpoint was not found. when the customer clicked Pay Now.",
+      "error_code": "HTTP 404",
+      "created_at": "2026-08-16T15:04:32.200402+00:00"
+    },
+    "created_at": "2026-08-16T15:04:32.201400+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_REPOSITORY_SELECTED",
+    "message": "Developer repository selected for investigation.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T15:04:32.204398+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_STARTED",
+    "message": "Historical evidence ranking started.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:04:32.208399+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MATCH",
+    "message": "Existing incident matched by exact fingerprint; repository investigation was skipped.",
+    "incident_id": 4,
+    "metadata": {
+      "match_type": "fingerprint"
+    },
+    "created_at": "2026-08-16T15:04:32.212400+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Searching historical incidents for matching evidence.",
+    "incident_id": null,
+    "metadata": {
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-16T15:04:32.215400+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-16T15:04:32.744628+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Historical evidence ranking completed.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:04:32.747632+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "RCA result generated. Human validation is required before applying the fix.",
+    "incident_id": 4,
+    "metadata": {
+      "status": "PENDING_HUMAN_VALIDATION",
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 167,
+      "line_end": 167,
+      "confidence": 0.9
+    },
+    "created_at": "2026-08-16T15:04:32.751633+00:00"
+  },
+  {
+    "activity_type": "SUPPORT_NOTIFICATION",
+    "message": "Final RCA response generated and made available to support.",
+    "incident_id": 4,
+    "metadata": {
+      "incident_id": "DEMO-20260816-4E6EC63C",
+      "action": "REUSE_PREVIOUS_SOLUTION",
+      "incident_status": "KNOWN"
+    },
+    "created_at": "2026-08-16T15:04:32.754633+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo-payment-service.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 400 HTTP 400: Payment request payload validation failed. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-6A953B5B",
+      "error_code": "HTTP 400",
+      "error_message": "HTTP 400: Payment request payload validation failed.",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T15:28:53.473598+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 3
+    },
+    "created_at": "2026-08-16T15:28:53.494676+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MATCH",
+    "message": "Existing incident matched by normalized error signature; repository investigation was skipped.",
+    "incident_id": 3,
+    "metadata": {
+      "match_type": "error_signature"
+    },
+    "created_at": "2026-08-16T15:28:53.507680+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MATCH",
+    "message": "A similar historical incident exists. Current incident will still be verified through the full RCA pipeline.",
+    "incident_id": 3,
+    "metadata": {},
+    "created_at": "2026-08-16T15:28:53.517678+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Retrieving historical incident evidence.",
+    "incident_id": null,
+    "metadata": {
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-16T15:28:53.522679+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_STARTED",
+    "message": "Applying hybrid ranking to historical evidence.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:28:53.527686+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_STARTED",
+    "message": "Scanning developer repository for code evidence.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T15:28:53.535688+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_FAILED",
+    "message": "RCA pipeline failed.",
+    "incident_id": null,
+    "metadata": {
+      "error": "Qwen code-aware RCA request failed: Error code: 404 - {'error': {'message': 'The model `qwen/qwen3-32b` does not exist or you do not have access to it.', 'type': 'invalid_request_error', 'code': 'model_not_found'}}",
+      "incident": "Payment API returned HTTP HTTP 400 HTTP 400: Payment request payload validation failed. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-6A953B5B",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T15:29:05.955683+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 504 HTTP 504: Payment gateway request timed out. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-6765C46C",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "error_code": "HTTP 504"
+    },
+    "created_at": "2026-08-16T15:39:35.718002+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 4
+    },
+    "created_at": "2026-08-16T15:39:35.768412+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:39:35.775422+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MISS",
+    "message": "No previous solved incident matched; code investigation is required.",
+    "incident_id": null,
+    "metadata": {
+      "fingerprint": "a68467325146bf9516199cc89adf06916335fae8496c0ca486013bc68e163de6",
+      "error_signature": "504|api|clicked|customer|gateway|http|now|out|pay|payment|returned|timed|when"
+    },
+    "created_at": "2026-08-16T15:39:35.799564+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:39:35.804570+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:39:35.810792+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:39:35.817826+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_FAILED",
+    "message": "RCA pipeline failed.",
+    "incident_id": null,
+    "metadata": {
+      "error": "Groq code-aware RCA failed using qwen/qwen3.6-27b: Error code: 413 - {'error': {'message': 'Request too large for model `qwen/qwen3.6-27b` in organization `org_01m020t1ksenasbf2ykk6tz511` service tier `on_demand` on tokens per minute (TPM): Limit 8000, Requested 8165, please reduce your message size and try again. Need more tokens? Upgrade to Dev Tier today at https://console.groq.com/settings/billing', 'type': 'tokens', 'code': 'rate_limit_exceeded'}}",
+      "incident": "Payment API returned HTTP HTTP 504 HTTP 504: Payment gateway request timed out. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-6765C46C"
+    },
+    "created_at": "2026-08-16T15:39:46.729914+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 504 HTTP 504: Payment gateway request timed out. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-202874B9",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "error_code": "HTTP 504"
+    },
+    "created_at": "2026-08-16T15:48:00.682199+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 5
+    },
+    "created_at": "2026-08-16T15:48:00.700206+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:48:00.713726+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MISS",
+    "message": "No previous solved incident matched; code investigation is required.",
+    "incident_id": null,
+    "metadata": {
+      "fingerprint": "a68467325146bf9516199cc89adf06916335fae8496c0ca486013bc68e163de6",
+      "error_signature": "504|api|clicked|customer|gateway|http|now|out|pay|payment|returned|timed|when"
+    },
+    "created_at": "2026-08-16T15:48:00.724726+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:48:00.733726+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:48:00.743726+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:48:00.770737+00:00"
+  },
+  {
+    "activity_type": "PIPELINE_FAILED",
+    "message": "RCA pipeline failed.",
+    "incident_id": null,
+    "metadata": {
+      "error": "Groq code-aware RCA failed using qwen/qwen3.6-27b: Error code: 400 - {'error': {'message': \"Failed to validate JSON. Please adjust your prompt. See 'failed_generation' for more details.\", 'type': 'invalid_request_error', 'code': 'json_validate_failed', 'failed_generation': ''}}",
+      "incident": "Payment API returned HTTP HTTP 504 HTTP 504: Payment gateway request timed out. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-202874B9"
+    },
+    "created_at": "2026-08-16T15:48:10.898326+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 503 HTTP 503: Payment service is temporarily unavailable. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-5DC516B0",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "error_code": "HTTP 503"
+    },
+    "created_at": "2026-08-16T15:52:38.808644+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 6
+    },
+    "created_at": "2026-08-16T15:52:38.816645+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:52:38.820662+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MISS",
+    "message": "No previous solved incident matched; code investigation is required.",
+    "incident_id": null,
+    "metadata": {
+      "fingerprint": "d37ee5da3b67ca621734fbcf5baed9b626d49474aa76ec0023d106e04d76ee4b",
+      "error_signature": "503|api|clicked|customer|http|now|pay|payment|returned|service|temporarily|unavailable|when"
+    },
+    "created_at": "2026-08-16T15:52:38.826315+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:52:38.830322+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:52:38.834346+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-16T15:52:38.838625+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-16T15:52:47.480513+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 5 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 5
+    },
+    "created_at": "2026-08-16T15:52:47.487518+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Historical incidents analyzed for likely root cause.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "The Payment API is returning a hardcoded HTTP 503 error response defined in the incident catalog and raised by the payment service logic, indicating a configuration or upstream dependency failure that triggers the 'Payment Service Unavailable' scenario."
+    },
+    "created_at": "2026-08-16T15:52:47.492512+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository scanned. Found 12 relevant findings.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "findings": 12
+    },
+    "created_at": "2026-08-16T15:52:47.498513+00:00"
+  },
+  {
+    "activity_type": "LLM_RCA_COMPLETED",
+    "message": "Code-aware LLM generated the final RCA.",
+    "incident_id": null,
+    "metadata": {
+      "model": null,
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence": 0.95
+    },
+    "created_at": "2026-08-16T15:52:47.503515+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "New code investigation and suggested solution were stored for future incidents.",
+    "incident_id": 5,
+    "metadata": {
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80
+    },
+    "created_at": "2026-08-16T15:52:47.511519+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "Complete RCA result saved for human validation.",
+    "incident_id": 5,
+    "metadata": {
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence": 0.95
+    },
+    "created_at": "2026-08-16T15:52:47.517530+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer must validate the generated RCA before applying the fix.",
+    "incident_id": 5,
+    "metadata": {},
+    "created_at": "2026-08-16T15:52:47.522529+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo payment application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 401 HTTP 401: Payment failed. Authentication dependency credentials are expired. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-C21B0138",
+      "error_code": "HTTP 401",
+      "error_message": "HTTP 401: Payment failed. Authentication dependency credentials are expired.",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T16:10:54.414506+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 7,
+      "query": "My payment failed"
+    },
+    "created_at": "2026-08-16T16:10:54.436029+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Historical RAG retrieval started.",
+    "incident_id": null,
+    "metadata": {
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-16T16:10:54.448026+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_STARTED",
+    "message": "Hybrid evidence ranking started.",
+    "incident_id": null,
+    "metadata": {
+      "target_top_k": 5
+    },
+    "created_at": "2026-08-16T16:10:54.457040+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_STARTED",
+    "message": "Developer repository investigation started.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T16:10:54.467037+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Historical RAG retrieval completed. Retrieved 20 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "retrieved": 20,
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-16T16:11:03.784121+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking completed. Selected 5 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "top20": 20,
+      "top5": 5
+    },
+    "created_at": "2026-08-16T16:11:03.789127+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository investigation completed.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "findings": 12
+    },
+    "created_at": "2026-08-16T16:11:03.839644+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Root cause analysis completed.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "The Payment API failed because the authentication dependency credentials were expired, causing a PermissionError during validation which was caught and re-raised as a PaymentFailure with HTTP 401."
+    },
+    "created_at": "2026-08-16T16:11:03.846643+00:00"
+  },
+  {
+    "activity_type": "QWEN_RESOLUTION_COMPLETED",
+    "message": "Qwen code-aware RCA and resolution completed.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 56,
+      "line_end": 56,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-16T16:11:03.851642+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer validation is required before applying the suggested fix.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 56,
+      "line_end": 56,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-16T16:11:03.858649+00:00"
+  },
+  {
+    "activity_type": "HISTORY_SAVE_WARNING",
+    "message": "RCA result generated but history save returned an error.",
+    "incident_id": null,
+    "metadata": {
+      "error": "'IncidentHistoryRepository' object has no attribute 'add_activity'"
+    },
+    "created_at": "2026-08-16T16:11:03.873558+00:00"
+  },
+  {
+    "activity_type": "RCA_PIPELINE_COMPLETED",
+    "message": "Complete 8-phase RCA pipeline finished successfully.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "DEMO-20260816-C21B0138",
+      "root_cause": "The Payment API failed because the authentication dependency credentials were expired, causing a PermissionError during validation which was caught and re-raised as a PaymentFailure with HTTP 401.",
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 56,
+      "line_end": 56,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-16T16:11:03.877565+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo payment application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP HTTP 503 HTTP 503: Payment service is temporarily unavailable. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260816-B107B42F",
+      "error_code": "HTTP 503",
+      "error_message": "HTTP 503: Payment service is temporarily unavailable.",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T16:24:55.429258+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 8,
+      "query": "My payment failed"
+    },
+    "created_at": "2026-08-16T16:24:55.443782+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Historical RAG retrieval started.",
+    "incident_id": null,
+    "metadata": {
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-16T16:24:55.458779+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_STARTED",
+    "message": "Hybrid evidence ranking started.",
+    "incident_id": null,
+    "metadata": {
+      "target_top_k": 5
+    },
+    "created_at": "2026-08-16T16:24:55.473804+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_STARTED",
+    "message": "Developer repository investigation started.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-16T16:24:55.492325+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Historical RAG retrieval completed. Retrieved 20 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "retrieved": 20,
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-16T16:25:05.322944+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking completed. Selected 5 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "top20": 20,
+      "top5": 5
+    },
+    "created_at": "2026-08-16T16:25:05.327930+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository investigation completed.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "findings": 12
+    },
+    "created_at": "2026-08-16T16:25:05.334940+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Root cause analysis completed.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "The Payment API is returning an HTTP 503 error because the application logic explicitly raises a PaymentFailure exception with the message 'Payment service is temporarily unavailable' when the scenario matches 'RCA-00084'. This indicates a deliberate or misconfigured fallback to an unavailable state, likely due to an underlying dependency failure or configuration issue triggering this specific error path."
+    },
+    "created_at": "2026-08-16T16:25:05.339963+00:00"
+  },
+  {
+    "activity_type": "QWEN_RESOLUTION_COMPLETED",
+    "message": "Qwen code-aware RCA and resolution completed.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-16T16:25:05.347965+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer validation is required before applying the suggested fix.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-16T16:25:05.355407+00:00"
+  },
+  {
+    "activity_type": "HISTORY_SAVE_WARNING",
+    "message": "RCA result generated but history save returned an error.",
+    "incident_id": null,
+    "metadata": {
+      "error": "'IncidentHistoryRepository' object has no attribute 'add_activity'"
+    },
+    "created_at": "2026-08-16T16:25:05.365400+00:00"
+  },
+  {
+    "activity_type": "RCA_PIPELINE_COMPLETED",
+    "message": "Complete 8-phase RCA pipeline finished successfully.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "DEMO-20260816-B107B42F",
+      "root_cause": "The Payment API is returning an HTTP 503 error because the application logic explicitly raises a PaymentFailure exception with the message 'Payment service is temporarily unavailable' when the scenario matches 'RCA-00084'. This indicates a deliberate or misconfigured fallback to an unavailable state, likely due to an underlying dependency failure or configuration issue triggering this specific error path.",
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-16T16:25:05.373403+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo payment application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP 503 HTTP 503: Payment service is temporarily unavailable. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260817-2BA2FB8B",
+      "error_code": "HTTP 503",
+      "error_message": "HTTP 503: Payment service is temporarily unavailable.",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-17T03:51:14.659608+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 9,
+      "query": "My payment failed"
+    },
+    "created_at": "2026-08-17T03:51:14.677638+00:00"
+  },
+  {
+    "activity_type": "RAG_RETRIEVAL_STARTED",
+    "message": "Historical RAG retrieval started.",
+    "incident_id": null,
+    "metadata": {
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-17T03:51:14.694155+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_STARTED",
+    "message": "Hybrid evidence ranking started.",
+    "incident_id": null,
+    "metadata": {
+      "target_top_k": 5
+    },
+    "created_at": "2026-08-17T03:51:14.708162+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_STARTED",
+    "message": "Developer repository investigation started.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-17T03:51:14.792715+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Historical RAG retrieval completed. Retrieved 20 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "retrieved": 20,
+      "requested_top_k": 20
+    },
+    "created_at": "2026-08-17T03:51:23.592473+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking completed. Selected 5 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "top20": 20,
+      "top5": 5
+    },
+    "created_at": "2026-08-17T03:51:23.596485+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository investigation completed.",
+    "incident_id": null,
+    "metadata": {
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+      "findings": 12
+    },
+    "created_at": "2026-08-17T03:51:23.603487+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Root cause analysis completed.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "The Payment API is returning an HTTP 503 status code because the application logic explicitly raises a PaymentFailure exception with this status code when the service is deemed unavailable. The code in payment_service.py triggers this specific error scenario (RCA-00084), resulting in the 'Payment service is temporarily unavailable' message observed in the incident."
+    },
+    "created_at": "2026-08-17T03:51:23.608485+00:00"
+  },
+  {
+    "activity_type": "QWEN_RESOLUTION_COMPLETED",
+    "message": "Qwen code-aware RCA and resolution completed.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-17T03:51:23.614495+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer validation is required before applying the suggested fix.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-17T03:51:23.619495+00:00"
+  },
+  {
+    "activity_type": "HISTORY_SAVE_WARNING",
+    "message": "RCA result generated but history save returned an error.",
+    "incident_id": null,
+    "metadata": {
+      "error": "'IncidentHistoryRepository' object has no attribute 'add_activity'"
+    },
+    "created_at": "2026-08-17T03:51:23.628030+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer must validate the generated RCA before applying the suggested fix.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "DEMO-20260817-2BA2FB8B",
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence": 0.95,
+      "confidence_percent": 95.0,
+      "status": "PENDING_HUMAN_VALIDATION"
+    },
+    "created_at": "2026-08-17T03:51:23.632026+00:00"
+  },
+  {
+    "activity_type": "RCA_PIPELINE_COMPLETED",
+    "message": "Complete 8-phase RCA pipeline finished successfully.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "DEMO-20260817-2BA2FB8B",
+      "root_cause": "The Payment API is returning an HTTP 503 status code because the application logic explicitly raises a PaymentFailure exception with this status code when the service is deemed unavailable. The code in payment_service.py triggers this specific error scenario (RCA-00084), resulting in the 'Payment service is temporarily unavailable' message observed in the incident.",
+      "file_path": "src/payment/payment_service.py",
+      "line_start": 80,
+      "line_end": 80,
+      "confidence_percent": 95.0
+    },
+    "created_at": "2026-08-17T03:51:23.636028+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo payment application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP 502 Bad Gateway when customer clicked Pay Now.",
+      "incident_id": "TEST-NEW-20260817-001",
+      "error_code": "HTTP 502",
+      "error_message": "Bad Gateway",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se"
+    },
+    "created_at": "2026-08-17T04:02:39.062891+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 10,
+      "query": "My payment failed because of a gateway error"
+    },
+    "created_at": "2026-08-17T04:02:39.076898+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Root cause analysis completed.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "The Payment API returned HTTP 502 Bad Gateway, which typically indicates a failure in communication between the API and an upstream service or gateway. The repository findings identify a known incident pattern 'Payment Gateway External API Timeout' (RCA-00087) associated with HTTP 504 errors, which are closely related to 502 errors in gateway scenarios. The lack of specific stack traces suggests the failure occurred at the network/gateway level rather than within the application logic itself, pointing to an external dependency timeout or unavailability."
+    },
+    "created_at": "2026-08-17T04:02:47.028773+00:00"
+  },
+  {
+    "activity_type": "QWEN_RESOLUTION_COMPLETED",
+    "message": "Qwen code-aware RCA and resolution completed.",
+    "incident_id": null,
+    "metadata": {
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 96,
+      "line_end": 96,
+      "confidence_percent": 85.0
+    },
+    "created_at": "2026-08-17T04:02:47.036775+00:00"
+  },
+  {
+    "activity_type": "HISTORY_SAVE_WARNING",
+    "message": "RCA result generated but history save returned an error.",
+    "incident_id": null,
+    "metadata": {
+      "error": "name 're' is not defined"
+    },
+    "created_at": "2026-08-17T04:02:47.048313+00:00"
+  },
+  {
+    "activity_type": "RCA_PIPELINE_COMPLETED",
+    "message": "Complete 8-phase RCA pipeline finished successfully.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "TEST-NEW-20260817-001",
+      "root_cause": "The Payment API returned HTTP 502 Bad Gateway, which typically indicates a failure in communication between the API and an upstream service or gateway. The repository findings identify a known incident pattern 'Payment Gateway External API Timeout' (RCA-00087) associated with HTTP 504 errors, which are closely related to 502 errors in gateway scenarios. The lack of specific stack traces suggests the failure occurred at the network/gateway level rather than within the application logic itself, pointing to an external dependency timeout or unavailability.",
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 96,
+      "line_end": 96,
+      "confidence_percent": 85.0
+    },
+    "created_at": "2026-08-17T04:02:47.054315+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer must validate the generated RCA before applying the fix.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "TEST-NEW-20260817-001",
+      "file_path": "src/payment/incident_catalog.py",
+      "line_start": 96,
+      "line_end": 96,
+      "confidence_percent": 85.0,
+      "status": "PENDING_HUMAN_VALIDATION"
+    },
+    "created_at": "2026-08-17T04:02:47.061318+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+      "incident_id": "TEST-NOVEL-001",
+      "service": "attendance-service",
+      "route": "/api/attendance/export",
+      "repository": null,
+      "error_code": "FONT-001"
+    },
+    "created_at": "2026-08-17T04:35:42.756183+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+      "incident_id": "TEST-NOVEL-001",
+      "service": "attendance-service",
+      "route": "/api/attendance/export",
+      "repository": null,
+      "error_code": "FONT-001"
+    },
+    "created_at": "2026-08-17T04:39:22.460667+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 11
+    },
+    "created_at": "2026-08-17T04:39:22.486214+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:39:22.493210+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+      "incident_id": "TEST-NOVEL-001",
+      "service": "attendance-service",
+      "route": "/api/attendance/export",
+      "repository": null,
+      "error_code": "FONT-001"
+    },
+    "created_at": "2026-08-17T04:44:50.628023+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 12
+    },
+    "created_at": "2026-08-17T04:44:50.646047+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:44:50.651045+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:44:50.656049+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:44:50.659877+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:44:50.664687+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T04:44:56.847568+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 0 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 0
+    },
+    "created_at": "2026-08-17T04:44:56.853573+00:00"
+  },
+  {
+    "activity_type": "COMPLETELY_NEW_INCIDENT",
+    "message": "No sufficiently similar historical incident or validated evidence was found.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "TEST-NOVEL-001",
+      "best_vector_similarity": 0.297553,
+      "best_developer_kb_similarity": 0.0,
+      "vector_threshold": 0.7
+    },
+    "created_at": "2026-08-17T04:44:56.858578+00:00"
+  },
+  {
+    "activity_type": "DEVELOPER_KB_ENTRY_REQUIRED",
+    "message": "Developer must add the verified incident, root cause, resolution and prevention before this incident becomes reusable knowledge.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:44:56.863575+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Attendance PDF download fails because the selected font cannot be rendered by the PDF engine.",
+      "incident_id": "TEST-SIMILAR-002",
+      "service": "attendance-service",
+      "route": "/api/attendance/export",
+      "repository": null,
+      "error_code": "FONT-002"
+    },
+    "created_at": "2026-08-17T04:52:11.967568+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 13
+    },
+    "created_at": "2026-08-17T04:52:11.977573+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:11.983573+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:11.988572+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:11.995071+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:12.002079+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T04:52:13.234367+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 0 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 0
+    },
+    "created_at": "2026-08-17T04:52:13.242368+00:00"
+  },
+  {
+    "activity_type": "COMPLETELY_NEW_INCIDENT",
+    "message": "No sufficiently similar historical incident or validated evidence was found.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "TEST-SIMILAR-002",
+      "best_vector_similarity": 0.268071,
+      "best_developer_kb_similarity": 0.332219,
+      "vector_threshold": 0.7
+    },
+    "created_at": "2026-08-17T04:52:13.249369+00:00"
+  },
+  {
+    "activity_type": "DEVELOPER_KB_ENTRY_REQUIRED",
+    "message": "Developer must add the verified incident, root cause, resolution and prevention before this incident becomes reusable knowledge.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:13.255370+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Attendance PDF download fails because the selected font cannot be rendered by the PDF engine.",
+      "incident_id": "TEST-SIMILAR-002",
+      "service": "attendance-service",
+      "route": "/api/attendance/export",
+      "repository": null,
+      "error_code": "FONT-002"
+    },
+    "created_at": "2026-08-17T04:52:36.345978+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 14
+    },
+    "created_at": "2026-08-17T04:52:36.352979+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:36.377998+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:36.385529+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:36.390530+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:36.398528+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T04:52:36.784134+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 0 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 0
+    },
+    "created_at": "2026-08-17T04:52:36.793141+00:00"
+  },
+  {
+    "activity_type": "COMPLETELY_NEW_INCIDENT",
+    "message": "No sufficiently similar historical incident or validated evidence was found.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "TEST-SIMILAR-002",
+      "best_vector_similarity": 0.268071,
+      "best_developer_kb_similarity": 0.332219,
+      "vector_threshold": 0.7
+    },
+    "created_at": "2026-08-17T04:52:36.801141+00:00"
+  },
+  {
+    "activity_type": "DEVELOPER_KB_ENTRY_REQUIRED",
+    "message": "Developer must add the verified incident, root cause, resolution and prevention before this incident becomes reusable knowledge.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T04:52:36.807141+00:00"
+  },
+  {
+    "activity_type": "DEVELOPER_KB_ENTRY_ADDED",
+    "message": "Developer-approved completely new incident was added to the historical knowledge base.",
+    "incident_id": 11,
+    "metadata": {
+      "knowledge_base_id": "KB-20260817-65491673-0003",
+      "source_incident_id": "TEST-NOVEL-001",
+      "validated_by": "developer",
+      "repository": null
+    },
+    "created_at": "2026-08-17T05:22:12.138442+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Attendance report PDF cannot be downloaded because the configured font fails during PDF rendering.",
+      "incident_id": "TEST-SIMILAR-002",
+      "service": "attendance-service",
+      "route": "/api/attendance/export",
+      "repository": null,
+      "error_code": "FONT-002"
+    },
+    "created_at": "2026-08-17T05:25:55.540903+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 15
+    },
+    "created_at": "2026-08-17T05:25:55.555883+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:25:55.567898+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:25:55.576144+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:25:55.583148+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:25:55.588997+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T05:26:03.766434+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 0 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 0
+    },
+    "created_at": "2026-08-17T05:26:03.774971+00:00"
+  },
+  {
+    "activity_type": "COMPLETELY_NEW_INCIDENT",
+    "message": "No sufficiently similar historical incident or validated evidence was found.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "TEST-SIMILAR-002",
+      "best_vector_similarity": 0.321057,
+      "best_developer_kb_similarity": 0.36875,
+      "vector_threshold": 0.7
+    },
+    "created_at": "2026-08-17T05:26:03.780962+00:00"
+  },
+  {
+    "activity_type": "DEVELOPER_KB_ENTRY_REQUIRED",
+    "message": "Developer must add the verified incident, root cause, resolution and prevention before this incident becomes reusable knowledge.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:26:03.789464+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP 504 HTTP 504: Payment gateway request timed out. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260817-664588B4",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "apps/demo-payment-service/demo-se",
+      "error_code": "HTTP 504"
+    },
+    "created_at": "2026-08-17T05:31:40.492959+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 16
+    },
+    "created_at": "2026-08-17T05:31:40.501964+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:31:40.509485+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP 401 HTTP 401: Payment failed. Authentication dependency credentials are expired. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260817-678C0E7E",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "apps/demo-payment-service/demo-se",
+      "error_code": "HTTP 401"
+    },
+    "created_at": "2026-08-17T05:35:06.521132+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 17
+    },
+    "created_at": "2026-08-17T05:35:06.532130+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:35:06.543123+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MATCH",
+    "message": "Existing incident matched by normalized error signature; repository investigation was skipped.",
+    "incident_id": 6,
+    "metadata": {
+      "match_type": "error_signature"
+    },
+    "created_at": "2026-08-17T05:35:06.551124+00:00"
+  },
+  {
+    "activity_type": "HISTORY_MATCH",
+    "message": "Existing incident matched. Previous RCA reused.",
+    "incident_id": 6,
+    "metadata": {
+      "match_type": "error_signature"
+    },
+    "created_at": "2026-08-17T05:35:06.557132+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+      "incident_id": "TEST-NOVEL-20260817-001",
+      "service": "attendance-service",
+      "route": "/api/attendance/export",
+      "repository": null,
+      "error_code": "FONT-001"
+    },
+    "created_at": "2026-08-17T05:39:57.692193+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 18
+    },
+    "created_at": "2026-08-17T05:39:57.701187+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:39:57.710188+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:39:57.716186+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:39:57.723190+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:39:57.729187+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T05:40:06.549930+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 5 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 5
+    },
+    "created_at": "2026-08-17T05:40:06.555019+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Historical incidents analyzed for likely root cause.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "a business configuration value was entered incorrectly"
+    },
+    "created_at": "2026-08-17T05:40:06.560025+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository scanned. Found 0 relevant findings.",
+    "incident_id": null,
+    "metadata": {
+      "repository": null,
+      "findings": 0
+    },
+    "created_at": "2026-08-17T05:40:06.565037+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "Complete RCA result saved for human validation.",
+    "incident_id": 12,
+    "metadata": {
+      "file_path": null,
+      "line_start": null,
+      "confidence": null
+    },
+    "created_at": "2026-08-17T05:40:06.571051+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer must validate the generated RCA before applying the fix.",
+    "incident_id": 12,
+    "metadata": {},
+    "created_at": "2026-08-17T05:40:06.577045+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+      "incident_id": "TEST-NOVEL-20260817-001",
+      "service": "attendance-service",
+      "route": "/api/attendance/export",
+      "repository": null,
+      "error_code": "FONT-001"
+    },
+    "created_at": "2026-08-17T05:40:56.526146+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 19
+    },
+    "created_at": "2026-08-17T05:40:56.544147+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:40:56.553140+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:40:56.560141+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:40:56.567145+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:40:56.573141+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T05:41:02.337561+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 5 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 5
+    },
+    "created_at": "2026-08-17T05:41:02.343564+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Historical incidents analyzed for likely root cause.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "a production component failed after an unvalidated configuration change"
+    },
+    "created_at": "2026-08-17T05:41:02.350567+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository scanned. Found 0 relevant findings.",
+    "incident_id": null,
+    "metadata": {
+      "repository": null,
+      "findings": 0
+    },
+    "created_at": "2026-08-17T05:41:02.358074+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "Complete RCA result saved for human validation.",
+    "incident_id": 13,
+    "metadata": {
+      "file_path": null,
+      "line_start": null,
+      "confidence": null
+    },
+    "created_at": "2026-08-17T05:41:02.365083+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer must validate the generated RCA before applying the fix.",
+    "incident_id": 13,
+    "metadata": {},
+    "created_at": "2026-08-17T05:41:02.371079+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "A wildlife image classification service crashes because the uploaded image has an unsupported TIFF compression format.",
+      "incident_id": "TEST-NOVEL-20260817-999",
+      "service": "wildlife-image-service",
+      "route": "/api/images/classify",
+      "repository": null,
+      "error_code": "IMG-TIFF-001"
+    },
+    "created_at": "2026-08-17T05:44:01.357691+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 20
+    },
+    "created_at": "2026-08-17T05:44:01.372678+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:44:01.384689+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:44:01.390683+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:44:01.396693+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:44:01.402202+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T05:44:01.842932+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 0 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 0
+    },
+    "created_at": "2026-08-17T05:44:01.848937+00:00"
+  },
+  {
+    "activity_type": "COMPLETELY_NEW_INCIDENT",
+    "message": "No sufficiently similar historical incident or validated evidence was found.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "TEST-NOVEL-20260817-999",
+      "best_vector_similarity": 0.362123,
+      "best_developer_kb_similarity": 0.0,
+      "vector_threshold": 0.7
+    },
+    "created_at": "2026-08-17T05:44:01.856938+00:00"
+  },
+  {
+    "activity_type": "DEVELOPER_KB_ENTRY_REQUIRED",
+    "message": "Developer must add the verified incident, root cause, resolution and prevention before this incident becomes reusable knowledge.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T05:44:01.863288+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "A wildlife image classification service crashes because the uploaded image has an unsupported TIFF compression format.",
+      "incident_id": "TEST-NOVEL-20260817-999",
+      "service": "wildlife-image-service",
+      "route": "/api/images/classify",
+      "repository": null,
+      "error_code": "IMG-TIFF-001"
+    },
+    "created_at": "2026-08-17T06:06:23.360773+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 21
+    },
+    "created_at": "2026-08-17T06:06:23.374784+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:06:23.381780+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:06:23.387980+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:06:23.394980+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:06:23.400989+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T06:06:32.225554+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 0 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 0
+    },
+    "created_at": "2026-08-17T06:06:32.234094+00:00"
+  },
+  {
+    "activity_type": "COMPLETELY_NEW_INCIDENT",
+    "message": "No sufficiently similar historical incident or validated evidence was found.",
+    "incident_id": null,
+    "metadata": {
+      "incident_id": "TEST-NOVEL-20260817-999",
+      "best_vector_similarity": 0.362123,
+      "best_developer_kb_similarity": 0.0,
+      "vector_threshold": 0.7
+    },
+    "created_at": "2026-08-17T06:06:32.245087+00:00"
+  },
+  {
+    "activity_type": "DEVELOPER_KB_ENTRY_REQUIRED",
+    "message": "Developer must add the verified incident, root cause, resolution and prevention before this incident becomes reusable knowledge.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:06:32.253083+00:00"
+  },
+  {
+    "activity_type": "DEVELOPER_KB_ENTRY_ADDED",
+    "message": "Developer-approved incident added to the historical knowledge base.",
+    "incident_id": 14,
+    "metadata": {
+      "knowledge_base_id": "KB-20260817-EF6E6A55-0002",
+      "source_incident_id": "TEST-NOVEL-20260817-999",
+      "validated_by": "developer",
+      "repository": null
+    },
+    "created_at": "2026-08-17T06:08:30.902409+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Image classification fails when users upload TIFF files encoded with an unsupported compression method.",
+      "incident_id": "TEST-SIMILAR-20260817-1000",
+      "service": "wildlife-image-service",
+      "route": "/api/images/classify",
+      "repository": null,
+      "error_code": "IMG-TIFF-002"
+    },
+    "created_at": "2026-08-17T06:13:45.609028+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 22
+    },
+    "created_at": "2026-08-17T06:13:45.620032+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:13:45.630024+00:00"
+  },
+  {
+    "activity_type": "NEW_INCIDENT",
+    "message": "No previous solution found. Starting complete RCA pipeline.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:13:45.637031+00:00"
+  },
+  {
+    "activity_type": "EMBEDDING_STARTED",
+    "message": "Creating embedding for the new incident.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:13:45.643040+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_STARTED",
+    "message": "Retrieving the top 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:13:45.649045+00:00"
+  },
+  {
+    "activity_type": "RAG_TOP20_COMPLETED",
+    "message": "Retrieved 20 historical incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 20
+    },
+    "created_at": "2026-08-17T06:13:46.231915+00:00"
+  },
+  {
+    "activity_type": "HYBRID_RERANK_COMPLETED",
+    "message": "Hybrid reranking selected 5 incidents.",
+    "incident_id": null,
+    "metadata": {
+      "count": 5
+    },
+    "created_at": "2026-08-17T06:13:46.239918+00:00"
+  },
+  {
+    "activity_type": "ROOT_CAUSE_ANALYSIS_COMPLETED",
+    "message": "Historical incidents analyzed for likely root cause.",
+    "incident_id": null,
+    "metadata": {
+      "root_cause": "an application dependency became unavailable"
+    },
+    "created_at": "2026-08-17T06:13:46.246918+00:00"
+  },
+  {
+    "activity_type": "CODE_SCAN_COMPLETED",
+    "message": "Developer repository scanned. Found 0 relevant findings.",
+    "incident_id": null,
+    "metadata": {
+      "repository": null,
+      "findings": 0
+    },
+    "created_at": "2026-08-17T06:13:46.253915+00:00"
+  },
+  {
+    "activity_type": "NEW_INVESTIGATION_SAVED",
+    "message": "Complete RCA result saved for human validation.",
+    "incident_id": 15,
+    "metadata": {
+      "file_path": null,
+      "line_start": null,
+      "confidence": null
+    },
+    "created_at": "2026-08-17T06:13:46.265924+00:00"
+  },
+  {
+    "activity_type": "HUMAN_VALIDATION_REQUIRED",
+    "message": "Developer must validate the generated RCA before applying the fix.",
+    "incident_id": 15,
+    "metadata": {},
+    "created_at": "2026-08-17T06:13:46.274443+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "A wildlife image classification service crashes because the uploaded image has an unsupported TIFF compression format.",
+      "incident_id": null,
+      "service": "wildlife-image-service",
+      "route": "/api/images/classify",
+      "repository": "apps/wildlife-image-service",
+      "error_code": null
+    },
+    "created_at": "2026-08-17T06:24:48.302394+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 23
+    },
+    "created_at": "2026-08-17T06:24:48.316395+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:24:48.324389+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "A wildlife image classification service crashes because the uploaded image has an unsupported TIFF compression format.",
+      "incident_id": null,
+      "service": "wildlife-image-service",
+      "route": "/api/images/classify",
+      "repository": "apps/wildlife-image-service",
+      "error_code": null
+    },
+    "created_at": "2026-08-17T06:24:48.629517+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 24
+    },
+    "created_at": "2026-08-17T06:24:48.660514+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:24:48.678513+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "string",
+      "incident_id": "string",
+      "service": "string",
+      "route": "string",
+      "repository": "string",
+      "error_code": "string"
+    },
+    "created_at": "2026-08-17T06:25:58.741824+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 25
+    },
+    "created_at": "2026-08-17T06:25:58.781376+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:25:58.823018+00:00"
+  },
+  {
+    "activity_type": "INCIDENT_RECEIVED",
+    "message": "Incident received from demo application.",
+    "incident_id": null,
+    "metadata": {
+      "incident": "Payment API returned HTTP 504 HTTP 504: Payment gateway request timed out. when the customer clicked Pay Now.",
+      "incident_id": "DEMO-20260817-4DB5B3EC",
+      "service": "demo-payment-service",
+      "route": "/api/demo/payment",
+      "repository": "apps/demo-payment-service/demo-se",
+      "error_code": "HTTP 504"
+    },
+    "created_at": "2026-08-17T06:33:43.191773+00:00"
+  },
+  {
+    "activity_type": "CUSTOMER_QUERY_SAVED",
+    "message": "Customer query stored in local JSON database.",
+    "incident_id": null,
+    "metadata": {
+      "customer_query_id": 26
+    },
+    "created_at": "2026-08-17T06:33:43.207997+00:00"
+  },
+  {
+    "activity_type": "HISTORY_CHECK_STARTED",
+    "message": "Checking whether this incident was previously solved.",
+    "incident_id": null,
+    "metadata": {},
+    "created_at": "2026-08-17T06:33:43.216995+00:00"
+  }
+]

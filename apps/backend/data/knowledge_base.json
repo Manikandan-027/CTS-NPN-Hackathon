@@ -1,0 +1,57 @@
+[
+  {
+    "incident_id": "KB-20260817-65491673-0003",
+    "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+    "root_cause": "The PDF generator uses an unsupported font.",
+    "resolution": "Replace the unsupported font with the validated font profile.",
+    "prevention": "Add PDF rendering regression tests for supported fonts.",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [
+      "Developer reproduced the failure.",
+      "The font configuration was confirmed as the root cause."
+    ],
+    "service": "attendance-service",
+    "route": "/api/attendance/export",
+    "repository": null,
+    "repository_investigation_available": false,
+    "validated_by": "developer",
+    "source_incident_id": "TEST-NOVEL-001",
+    "confidence": 1.0,
+    "status": "APPROVED",
+    "knowledge_base": true,
+    "source_type": "DeveloperKnowledgeBase",
+    "created_at": "2026-08-17T05:22:12.135441+00:00",
+    "validated_at": "2026-08-17T05:22:12.135441+00:00",
+    "history_id": 11
+  },
+  {
+    "incident_id": "KB-20260817-EF6E6A55-0002",
+    "incident": "A wildlife image classification service crashes because the uploaded image has an unsupported TIFF compression format.",
+    "root_cause": "The image processing component does not support the TIFF compression format used by the uploaded file.",
+    "resolution": "Convert the TIFF image to a supported compression format before classification.",
+    "prevention": "Validate supported TIFF compression formats during upload and add image-format regression tests.",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [
+      "Developer reproduced the TIFF compression failure.",
+      "The unsupported compression format was confirmed as the cause."
+    ],
+    "service": "wildlife-image-service",
+    "route": "/api/images/classify",
+    "repository": null,
+    "repository_investigation_available": false,
+    "validated_by": "developer",
+    "source_incident_id": "TEST-NOVEL-20260817-999",
+    "confidence": 1.0,
+    "status": "APPROVED",
+    "knowledge_base": true,
+    "source_type": "DeveloperKnowledgeBase",
+    "created_at": "2026-08-17T06:08:30.895409+00:00",
+    "validated_at": "2026-08-17T06:08:30.895409+00:00",
+    "history_id": 14,
+    "history_sync_status": "SYNCED"
+  }
+]

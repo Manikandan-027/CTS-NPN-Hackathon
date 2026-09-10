@@ -1,0 +1,14 @@
+{
+    "incident_id": "DEMO-20260816-2C268374",
+    "scenario_reference": "RCA-00087",
+    "service": "Payment API",
+    "environment": "Production",
+    "error_code": "HTTP 504",
+    "error_message": "HTTP 504: Payment gateway request timed out.",
+    "customer": "Akshaya",
+    "amount": 4555555.0,
+    "timestamp": "2026-08-16T09:03:29.262021+00:00",
+    "request_id": "REQ-610EAD21D9CB",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}

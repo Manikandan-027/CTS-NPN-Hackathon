@@ -1,0 +1,17 @@
+{
+    "incident_id": "DEMO-20260816-B107B42F",
+    "scenario_reference": "RCA-00084",
+    "service": "demo-payment-service",
+    "environment": "Production",
+    "route": "/api/demo/payment",
+    "repository": "apps/demo-payment-service/demo-se",
+    "error_code": "HTTP 503",
+    "error_message": "HTTP 503: Payment service is temporarily unavailable.",
+    "customer": "Demo Customer",
+    "amount": 4999.0,
+    "customer_query": "My payment failed",
+    "timestamp": "2026-08-16T16:24:48.063226+00:00",
+    "request_id": "REQ-EE442FD622E7",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}

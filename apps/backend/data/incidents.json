@@ -1,0 +1,570 @@
+[
+  {
+    "fingerprint": "176c5c9dffd17146dc384d676ab53222ebde5d85a9980a4150947640d05781c0",
+    "error_signature": "429|get|http|many|products|too",
+    "incident": "GET /products returns HTTP 429 Too Many Requests immediately for a new user",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\sample_code_project",
+    "source_type": "local",
+    "service": "sample-api",
+    "route": "/products",
+    "root_cause": "The rate limiter is configured with an excessively low quota: max_requests = 2.",
+    "file_path": "src/rate_limiter.py",
+    "line_start": 7,
+    "line_end": 7,
+    "evidence": [
+      "self.max_requests = 2"
+    ],
+    "suggested_fix": "Increase the request quota to an appropriate production threshold and validate it before deployment.",
+    "prevention": "Add rate-limit configuration validation and a test proving the first request from a new user succeeds.",
+    "confidence": 0.95,
+    "status": "OPEN",
+    "id": 1,
+    "created_at": "2026-08-16T11:24:06.827064+00:00"
+  },
+  {
+    "fingerprint": "282990209847617f5c43716ef3bbdd25edbe4720d16218f25107bfc0ec241001",
+    "error_signature": "401|api|demo|http|payment|post",
+    "incident": "POST /api/demo/payment returns HTTP 401 Payment Failed for a payment request",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+    "source_type": "local",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "root_cause": "expired credentials were configured for the authentication dependency",
+    "file_path": "demo-payment-service/app.py",
+    "line_start": 78,
+    "line_end": 78,
+    "evidence": [
+      "expired credentials were configured for the authentication dependency"
+    ],
+    "suggested_fix": "Rotate or update the authentication credentials used by the payment service and verify they are valid before the next request cycle. Ensure the environment variables or credential store reference a current token or secret.",
+    "prevention": "Implement a monitoring alert that flags authentication failures (HTTP 401) and create a runbook to rotate credentials proactively.",
+    "confidence": 0.6,
+    "status": "OPEN",
+    "id": 2,
+    "created_at": "2026-08-16T13:28:50.037888+00:00"
+  },
+  {
+    "fingerprint": "09938a26bbda770770b6b99e5f0b9ad1b8863a872187d5ae4ecc38226e64c9a0",
+    "error_signature": "400|api|clicked|customer|http|now|pay|payload|payment|returned|validation|when",
+    "incident": "Payment API returned HTTP HTTP 400 HTTP 400: Payment request payload validation failed. when the customer clicked Pay Now.",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+    "source_type": "local",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "root_cause": "The Payment API returned HTTP 400 because the incoming request payload failed validation in the payment_service.py logic. This indicates that the client submitted a payload that did not meet the required schema, causing the validation guard to reject it with a 400 response.",
+    "file_path": "demo-se/src/payment/payment_service.py",
+    "line_start": 131,
+    "line_end": 131,
+    "evidence": [
+      "Line 131 in payment_service.py contains the 400 error message for payload validation failure.",
+      "Line 136 in incident_catalog.py repeats the same error message."
+    ],
+    "suggested_fix": "Validate that the client request includes all required fields (e.g., amount, currency, card details) before it reaches the validation logic. If a field is missing, return a descriptive error rather than a generic 400. Add client‑side validation or a pre‑processing middleware to catch such issues earlier. Update the payment_service.py validation logic to handle missing fields gracefully and provide clear messages.",
+    "prevention": "Introduce automated tests that send incomplete or malformed payloads to ensure the API returns the expected 400 with detailed error messages. Perform regular code reviews of validation logic and keep client SDKs in sync with the API contract. Include this scenario in integration and capacity testing to detect regressions early.",
+    "confidence": 0.8,
+    "status": "OPEN",
+    "id": 3,
+    "created_at": "2026-08-16T13:37:00.719840+00:00"
+  },
+  {
+    "fingerprint": "4920159fde4f01b68ec5e0b015fa9e65680f4d51fa31bee20d096ccc70f5e7ae",
+    "error_signature": "404|api|clicked|customer|endpoint|found|http|not|now|pay|payment|returned|when",
+    "incident": "Payment API returned HTTP HTTP 404 HTTP 404: Payment API endpoint was not found. when the customer clicked Pay Now.",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+    "source_type": "local",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "root_cause": "The Payment API endpoint was not registered or was removed, causing the service to return HTTP 404 when the client attempted to call it.",
+    "file_path": "src/payment/incident_catalog.py",
+    "line_start": 167,
+    "line_end": 167,
+    "evidence": [
+      "Matched http-404: \"HTTP 404: Payment API endpoint \"",
+      "Matched payment: \"HTTP 404: Payment API endpoint \""
+    ],
+    "suggested_fix": "Verify that the route for the Payment API (e.g., \"/payment\" or the appropriate endpoint) is correctly defined and registered in the service’s router. If a recent deployment or configuration change removed the endpoint, revert the change or add the missing route back. After updating, redeploy and confirm that the endpoint responds with a 200 status code.",
+    "prevention": "Introduce automated health checks that periodically request all public Payment API endpoints and fail the deployment if any return non‑2xx responses. Add integration tests in CI/CD to hit every endpoint, and set up monitoring alerts for unexpected 404s. Ensure deployment manifests include all required route configurations.",
+    "confidence": 0.9,
+    "status": "OPEN",
+    "id": 4,
+    "created_at": "2026-08-16T14:39:12.398099+00:00"
+  },
+  {
+    "fingerprint": "d37ee5da3b67ca621734fbcf5baed9b626d49474aa76ec0023d106e04d76ee4b",
+    "error_signature": "503|api|clicked|customer|http|now|pay|payment|returned|service|temporarily|unavailable|when",
+    "incident": "Payment API returned HTTP HTTP 503 HTTP 503: Payment service is temporarily unavailable. when the customer clicked Pay Now.",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+    "source_type": "local",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "root_cause": "The Payment API is returning a hardcoded HTTP 503 error response defined in the incident catalog and raised by the payment service logic, indicating a configuration or upstream dependency failure that triggers the 'Payment Service Unavailable' scenario.",
+    "file_path": "src/payment/payment_service.py",
+    "line_start": 80,
+    "line_end": 80,
+    "evidence": [
+      "The current incident reports 'HTTP 503: Payment service is temporarily unavailable'.",
+      "Repository finding in src/payment/payment_service.py lines 79-85 shows the explicit raising of PaymentFailure with error code 'HTTP 503' and message 'HTTP 503: Payment service is temporarily unavailable.'",
+      "This code block is associated with scenario 'RCA-00084', which matches the historical incident pattern of underlying system component failures.",
+      "The error message in the code exactly matches the error message in the current incident."
+    ],
+    "suggested_fix": "Investigate the upstream payment gateway or service dependency to determine why it is unavailable. If the service is down, restore it. If the 503 is being raised incorrectly due to a logic error in the health check or connection pool, fix the underlying connectivity issue. Do not simply suppress the error.",
+    "prevention": "Implement robust health checks and circuit breakers for the payment service dependency. Ensure that 503 errors are only raised when the service is genuinely unavailable and not due to transient network glitches that should be retried. Add monitoring alerts for the frequency of RCA-00084 triggers.",
+    "confidence": 0.95,
+    "status": "OPEN",
+    "id": 5,
+    "created_at": "2026-08-16T15:52:47.510515+00:00"
+  },
+  {
+    "fingerprint": "4eaa4d88f7e1b081738f6382c08bf327f57512714e2a9bf6c9bb7ee291bd1f86",
+    "error_signature": "401|api|authentication|clicked|credentials|customer|dependency|expired|http|now|pay|payment|returned|when",
+    "incident": "Payment API returned HTTP HTTP 401 HTTP 401: Payment failed. Authentication dependency credentials are expired. when the customer clicked Pay Now.",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+    "source_type": "local",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "root_cause": "The Payment API failed because the authentication dependency credentials were expired, causing a PermissionError during validation which was caught and re-raised as a PaymentFailure with HTTP 401.",
+    "file_path": "src/payment/payment_service.py",
+    "line_start": 56,
+    "line_end": 56,
+    "evidence": [
+      "The current incident reports 'HTTP 401: Payment failed. Authentication dependency credentials are expired.'",
+      "Repository finding at src/payment/payment_service.py lines 56-66 shows the code block where authentication.validate_credentials() is called.",
+      "The code catches PermissionError (line 58) raised by validate_credentials() and raises a PaymentFailure with the exact error message seen in the incident (lines 60-66).",
+      "Historical incidents consistently cite 'expired credentials were configured for the authentication dependency' as the root cause.",
+      "Log file logs/DEMO-20260816-C21B0138.json confirms the error message matches the code output exactly."
+    ],
+    "suggested_fix": "Update the expired credentials in the authentication dependency configuration. Verify that the credential rotation mechanism is functioning correctly to prevent future expiration without notification.",
+    "prevention": "Implement automated monitoring for credential expiration dates. Set up alerts to notify the team before credentials expire. Ensure that credential rotation is automated or scheduled well in advance of expiration.",
+    "confidence": 0.95,
+    "status": "OPEN",
+    "id": 6,
+    "created_at": "2026-08-16T16:11:03.872661+00:00"
+  },
+  {
+    "fingerprint": "d37ee5da3b67ca621734fbcf5baed9b626d49474aa76ec0023d106e04d76ee4b",
+    "error_signature": "503|api|clicked|customer|http|now|pay|payment|returned|service|temporarily|unavailable|when",
+    "incident": "Payment API returned HTTP HTTP 503 HTTP 503: Payment service is temporarily unavailable. when the customer clicked Pay Now.",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+    "source_type": "local",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "root_cause": "The Payment API is returning an HTTP 503 error because the application logic explicitly raises a PaymentFailure exception with the message 'Payment service is temporarily unavailable' when the scenario matches 'RCA-00084'. This indicates a deliberate or misconfigured fallback to an unavailable state, likely due to an underlying dependency failure or configuration issue triggering this specific error path.",
+    "file_path": "src/payment/payment_service.py",
+    "line_start": 80,
+    "line_end": 80,
+    "evidence": [
+      "The current incident reports 'HTTP 503: Payment service is temporarily unavailable'.",
+      "Repository finding in src/payment/payment_service.py lines 79-85 shows code that explicitly raises PaymentFailure with error code 'HTTP 503' and the exact message 'HTTP 503: Payment service is temporarily unavailable.'",
+      "This code block is triggered when scenario == 'RCA-00084'.",
+      "Historical incidents indicate that reverting changes or restoring components resolved similar 'underlying system component' issues, suggesting this 503 is a symptom of a downstream failure or misconfiguration handled by this specific error path."
+    ],
+    "suggested_fix": "Investigate why the scenario 'RCA-00084' is being triggered. Check the health and connectivity of the underlying payment service or gateway. If this is a transient issue, implement retry logic or circuit breaker patterns before raising the 503. If it is a configuration error, correct the configuration that leads to this scenario. Ensure that the 'Payment service is temporarily unavailable' message is only raised when the downstream service is genuinely unreachable or overloaded, not due to application-level bugs.",
+    "prevention": "Implement robust health checks for downstream payment services. Use circuit breakers to handle transient failures gracefully. Add monitoring and alerting for the frequency of 'RCA-00084' scenarios to detect underlying issues early. Ensure that error handling logic distinguishes between application errors and genuine service unavailability.",
+    "confidence": 0.95,
+    "status": "OPEN",
+    "id": 7,
+    "created_at": "2026-08-16T16:25:05.363401+00:00"
+  },
+  {
+    "fingerprint": "adf828dce061d2a3f51a737df9551dab01b0a345e871aa32cfa40edc37f77018",
+    "error_signature": "503|api|clicked|customer|http|now|pay|payment|returned|service|temporarily|unavailable|when",
+    "incident": "Payment API returned HTTP 503 HTTP 503: Payment service is temporarily unavailable. when the customer clicked Pay Now.",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service\\demo-se",
+    "source_type": "local",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "root_cause": "The Payment API is returning an HTTP 503 status code because the application logic explicitly raises a PaymentFailure exception with this status code when the service is deemed unavailable. The code in payment_service.py triggers this specific error scenario (RCA-00084), resulting in the 'Payment service is temporarily unavailable' message observed in the incident.",
+    "file_path": "src/payment/payment_service.py",
+    "line_start": 80,
+    "line_end": 80,
+    "evidence": [
+      "The incident reports 'HTTP 503: Payment service is temporarily unavailable'.",
+      "Repository finding in src/payment/payment_service.py lines 79-85 shows explicit code raising PaymentFailure with error_code 'HTTP 503' and the exact error message string.",
+      "The code block is associated with scenario 'RCA-00084', indicating a defined failure mode for service unavailability.",
+      "Historical incidents suggest underlying system components or configurations not behaving as expected, which likely triggered the condition leading to this code path."
+    ],
+    "suggested_fix": "Investigate the condition triggering the 'RCA-00084' scenario in src/payment/payment_service.py. Check the health of the underlying payment service dependencies, network connectivity, or configuration settings that determine service availability. If the service is genuinely down, restore it. If the check is false-positive, adjust the availability logic.",
+    "prevention": "Implement robust health checks and circuit breakers for the payment service. Add monitoring alerts for the frequency of HTTP 503 errors. Ensure configuration management prevents invalid states that lead to service unavailability. Review the logic determining 'unavailable' status to ensure it accurately reflects the true state of the backend services.",
+    "confidence": 0.95,
+    "status": "OPEN",
+    "id": 8,
+    "created_at": "2026-08-17T03:51:23.627031+00:00"
+  },
+  {
+    "incident_id": "KB-20260817-65491673-0001",
+    "error_signature": "employee attendance pdf export crashes because of an unsupported font rendering configuration.",
+    "fingerprint": "e0800107d869ac5811c69467f79fe531f68331acb12b734a3549961d50c732c7",
+    "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+    "repository": null,
+    "service": "attendance-service",
+    "route": "/api/attendance/export",
+    "source_type": "DeveloperKnowledgeBase",
+    "root_cause": "The PDF generator uses a font unsupported by the rendering engine.",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [
+      "Developer reproduced the issue.",
+      "The font configuration was confirmed as the root cause."
+    ],
+    "suggested_fix": "Replace the unsupported font with the validated font profile.",
+    "prevention": "Add regression tests for all supported PDF fonts.",
+    "confidence": 1.0,
+    "status": "APPROVED",
+    "knowledge_base": true,
+    "validated_by": "developer",
+    "source_incident_id": "TEST-NOVEL-001",
+    "created_at": "2026-08-17T04:48:37.348975+00:00",
+    "validated_at": "2026-08-17T04:48:37.348975+00:00",
+    "id": 9
+  },
+  {
+    "incident_id": "KB-20260817-65491673-0002",
+    "error_signature": "employee attendance pdf export crashes because of an unsupported font rendering configuration.",
+    "fingerprint": "e0800107d869ac5811c69467f79fe531f68331acb12b734a3549961d50c732c7",
+    "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+    "repository": null,
+    "service": "attendance-service",
+    "route": "/api/attendance/export",
+    "source_type": "DeveloperKnowledgeBase",
+    "root_cause": "The PDF generator uses a font unsupported by the rendering engine.",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [
+      "Developer reproduced the issue.",
+      "The font configuration was confirmed as the root cause."
+    ],
+    "suggested_fix": "Replace the unsupported font with the validated font profile.",
+    "prevention": "Add regression tests for all supported PDF fonts.",
+    "confidence": 1.0,
+    "status": "APPROVED",
+    "knowledge_base": true,
+    "validated_by": "developer",
+    "source_incident_id": "TEST-NOVEL-001",
+    "created_at": "2026-08-17T04:48:56.106061+00:00",
+    "validated_at": "2026-08-17T04:48:56.106061+00:00",
+    "id": 10
+  },
+  {
+    "incident_id": "KB-20260817-65491673-0003",
+    "error_signature": "employee attendance pdf export crashes because of an unsupported font rendering configuration.",
+    "fingerprint": "e0800107d869ac5811c69467f79fe531f68331acb12b734a3549961d50c732c7",
+    "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+    "repository": null,
+    "service": "attendance-service",
+    "route": "/api/attendance/export",
+    "source_type": "DeveloperKnowledgeBase",
+    "root_cause": "The PDF generator uses an unsupported font.",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [
+      "Developer reproduced the failure.",
+      "The font configuration was confirmed as the root cause."
+    ],
+    "suggested_fix": "Replace the unsupported font with the validated font profile.",
+    "prevention": "Add PDF rendering regression tests for supported fonts.",
+    "confidence": 1.0,
+    "status": "APPROVED",
+    "knowledge_base": true,
+    "validated_by": "developer",
+    "source_incident_id": "TEST-NOVEL-001",
+    "created_at": "2026-08-17T05:22:12.135441+00:00",
+    "validated_at": "2026-08-17T05:22:12.135441+00:00",
+    "id": 11
+  },
+  {
+    "incident_id": "TEST-NOVEL-20260817-001",
+    "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+    "repository": null,
+    "service": "attendance-service",
+    "route": "/api/attendance/export",
+    "source_type": "local",
+    "root_cause": "a business configuration value was entered incorrectly",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [],
+    "suggested_fix": {
+      "recommended_resolution": "Replace the unsupported font with the validated font profile.",
+      "supporting_incidents": [
+        "KB-20260817-65491673-0001",
+        "KB-20260817-65491673-0002",
+        "KB-20260817-65491673-0003"
+      ],
+      "resolution_counts": {
+        "Replace the unsupported font with the validated font profile.": 3,
+        "Reverted the problematic change, restored the affected component, and confirmed successful end-to-end processing.": 2
+      },
+      "recommendations": [
+        {
+          "resolution": "Replace the unsupported font with the validated font profile.",
+          "supporting_incidents": [
+            "KB-20260817-65491673-0001",
+            "KB-20260817-65491673-0002",
+            "KB-20260817-65491673-0003"
+          ],
+          "count": 3
+        }
+      ]
+    },
+    "prevention": {
+      "recommended_prevention": "Add regression tests for all supported PDF fonts.",
+      "supporting_incidents": [
+        "KB-20260817-65491673-0001",
+        "KB-20260817-65491673-0002"
+      ],
+      "prevention_counts": {
+        "Add regression tests for all supported PDF fonts.": 2,
+        "Add PDF rendering regression tests for supported fonts.": 1,
+        "Introduce pre-production validation and automated configuration checks before future production changes.": 2
+      },
+      "recommendations": [
+        {
+          "preventive_action": "Add regression tests for all supported PDF fonts.",
+          "supporting_incidents": [
+            "KB-20260817-65491673-0001",
+            "KB-20260817-65491673-0002"
+          ],
+          "count": 2
+        }
+      ]
+    },
+    "confidence": 0.0,
+    "status": "PENDING_HUMAN_VALIDATION",
+    "id": 12,
+    "created_at": "2026-08-17T05:40:06.570046+00:00"
+  },
+  {
+    "incident_id": "TEST-NOVEL-20260817-001",
+    "incident": "Employee attendance PDF export crashes because of an unsupported font rendering configuration.",
+    "repository": null,
+    "service": "attendance-service",
+    "route": "/api/attendance/export",
+    "source_type": "local",
+    "root_cause": "a production component failed after an unvalidated configuration change",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [],
+    "suggested_fix": {
+      "recommended_resolution": "Replace the unsupported font with the validated font profile.",
+      "supporting_incidents": [
+        "KB-20260817-65491673-0001",
+        "KB-20260817-65491673-0002",
+        "KB-20260817-65491673-0003"
+      ],
+      "resolution_counts": {
+        "Replace the unsupported font with the validated font profile.": 3,
+        "Corrected the configuration or dependency, replayed the affected workload where required, and verified normal operation.": 1,
+        "Investigated logs and metrics for Order Management Service, corrected the identified issue, and validated service health after remediation.": 1
+      },
+      "recommendations": [
+        {
+          "resolution": "Replace the unsupported font with the validated font profile.",
+          "supporting_incidents": [
+            "KB-20260817-65491673-0001",
+            "KB-20260817-65491673-0002",
+            "KB-20260817-65491673-0003"
+          ],
+          "count": 3
+        }
+      ]
+    },
+    "prevention": {
+      "recommended_prevention": "Add regression tests for all supported PDF fonts.",
+      "supporting_incidents": [
+        "KB-20260817-65491673-0001",
+        "KB-20260817-65491673-0002"
+      ],
+      "prevention_counts": {
+        "Add regression tests for all supported PDF fonts.": 2,
+        "Add PDF rendering regression tests for supported fonts.": 1,
+        "Include the failure scenario in capacity, integration, and recovery testing and review the configuration periodically.": 1,
+        "Introduce pre-production validation and automated configuration checks before future production changes.": 1
+      },
+      "recommendations": [
+        {
+          "preventive_action": "Add regression tests for all supported PDF fonts.",
+          "supporting_incidents": [
+            "KB-20260817-65491673-0001",
+            "KB-20260817-65491673-0002"
+          ],
+          "count": 2
+        }
+      ]
+    },
+    "confidence": 0.0,
+    "status": "PENDING_HUMAN_VALIDATION",
+    "id": 13,
+    "created_at": "2026-08-17T05:41:02.364081+00:00"
+  },
+  {
+    "incident_id": "KB-20260817-EF6E6A55-0002",
+    "error_signature": "a wildlife image classification service crashes because the uploaded image has an unsupported tiff compression format.",
+    "fingerprint": "d7faf68008052a0fcd25e3a34b4de036a04d85db1b73504f03166a8517acddce",
+    "incident": "A wildlife image classification service crashes because the uploaded image has an unsupported TIFF compression format.",
+    "repository": null,
+    "service": "wildlife-image-service",
+    "route": "/api/images/classify",
+    "source_type": "DeveloperKnowledgeBase",
+    "root_cause": "The image processing component does not support the TIFF compression format used by the uploaded file.",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [
+      "Developer reproduced the TIFF compression failure.",
+      "The unsupported compression format was confirmed as the cause."
+    ],
+    "suggested_fix": "Convert the TIFF image to a supported compression format before classification.",
+    "prevention": "Validate supported TIFF compression formats during upload and add image-format regression tests.",
+    "confidence": 1.0,
+    "status": "APPROVED",
+    "knowledge_base": true,
+    "validated_by": "developer",
+    "source_incident_id": "TEST-NOVEL-20260817-999",
+    "created_at": "2026-08-17T06:08:30.895409+00:00",
+    "validated_at": "2026-08-17T06:08:30.895409+00:00",
+    "id": 14
+  },
+  {
+    "incident_id": "TEST-SIMILAR-20260817-1000",
+    "incident": "Image classification fails when users upload TIFF files encoded with an unsupported compression method.",
+    "repository": null,
+    "service": "wildlife-image-service",
+    "route": "/api/images/classify",
+    "source_type": "local",
+    "root_cause": "an application dependency became unavailable",
+    "file_path": null,
+    "line_start": null,
+    "line_end": null,
+    "evidence": [],
+    "suggested_fix": {
+      "recommended_resolution": "Corrected the configuration or dependency, replayed the affected workload where required, and verified normal operation.",
+      "supporting_incidents": [
+        "RCA-03177",
+        "RCA-03814",
+        "RCA-03935",
+        "RCA-05839"
+      ],
+      "resolution_counts": {
+        "Convert the TIFF image to a supported compression format before classification.": 1,
+        "Corrected the configuration or dependency, replayed the affected workload where required, and verified normal operation.": 4
+      },
+      "recommendations": [
+        {
+          "resolution": "Corrected the configuration or dependency, replayed the affected workload where required, and verified normal operation.",
+          "supporting_incidents": [
+            "RCA-03177",
+            "RCA-03814",
+            "RCA-03935",
+            "RCA-05839"
+          ],
+          "count": 4
+        }
+      ]
+    },
+    "prevention": {
+      "recommended_prevention": "Add automated health checks, monitoring alerts, and regression validation for the affected scenario.",
+      "supporting_incidents": [
+        "RCA-03177",
+        "RCA-03814",
+        "RCA-03935",
+        "RCA-05839"
+      ],
+      "prevention_counts": {
+        "Validate supported TIFF compression formats during upload and add image-format regression tests.": 1,
+        "Add automated health checks, monitoring alerts, and regression validation for the affected scenario.": 4
+      },
+      "recommendations": [
+        {
+          "preventive_action": "Add automated health checks, monitoring alerts, and regression validation for the affected scenario.",
+          "supporting_incidents": [
+            "RCA-03177",
+            "RCA-03814",
+            "RCA-03935",
+            "RCA-05839"
+          ],
+          "count": 4
+        }
+      ]
+    },
+    "confidence": 0.0,
+    "status": "PENDING_HUMAN_VALIDATION",
+    "id": 15,
+    "created_at": "2026-08-17T06:13:46.263930+00:00"
+  },
+  {
+    "incident_id": "CHAT-20260817-091250324",
+    "incident": "Payment API is returning HTTP 401",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "source_type": "chat",
+    "root_cause": "Expired credentials configured for the authentication dependency",
+    "file_path": "demo-se/src/payment/payment_service.py",
+    "line_start": 63,
+    "line_end": 63,
+    "evidence": [
+      "Historical incidents consistently identify 'expired credentials were configured for the authentication dependency' as the root cause.",
+      "Repository finding in payment_service.py lines 63-65 explicitly defines the error message: 'HTTP 401: Payment failed. Authentication dependency credentials are expired.'",
+      "The code raises a PaymentFailure with HTTP 401 status when a PermissionError occurs, directly linking the 401 response to credential expiration.",
+      "Log evidence confirms the error message matches the code definition exactly."
+    ],
+    "suggested_fix": "Update the authentication dependency credentials to valid, non-expired values in the configuration or secret management system.",
+    "prevention": "Implement automated credential rotation and monitoring alerts for upcoming credential expiration dates to prevent service disruption.",
+    "confidence": 0.95,
+    "status": "PENDING_HUMAN_VALIDATION",
+    "id": 16,
+    "created_at": "2026-08-17T09:13:07.269594+00:00"
+  },
+  {
+    "incident_id": "CHAT-20260817-091557574",
+    "incident": "Payment API is returning HTTP 401",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "source_type": "chat",
+    "root_cause": "Expired credentials configured for the authentication dependency, causing the Payment API to return HTTP 401 errors.",
+    "file_path": "demo-se/src/payment/payment_service.py",
+    "line_start": 63,
+    "line_end": 63,
+    "evidence": [
+      "Historical incidents consistently identify 'expired credentials were configured for the authentication dependency' as the root cause.",
+      "Repository finding in demo-se/src/payment/payment_service.py lines 63-65 explicitly raises a PaymentFailure with the message 'HTTP 401: Payment failed. Authentication dependency credentials are expired.'",
+      "Log file demo-se/logs/DEMO-20260816-C21B0138.json confirms the error message: 'HTTP 401: Payment failed. Authentication dependency credentials are expired.'",
+      "The code at line 63-65 is the direct source of the error message observed in the incident."
+    ],
+    "suggested_fix": "Update the authentication credentials in the configuration or secret management system for the authentication dependency. Verify the credentials are valid and have not expired. Restart the Payment API service to pick up the new credentials.",
+    "prevention": "Implement automated monitoring for credential expiration dates. Set up alerts to notify the team before credentials expire. Use short-lived tokens or automated rotation mechanisms for authentication credentials to prevent manual expiration issues.",
+    "confidence": 0.95,
+    "status": "PENDING_HUMAN_VALIDATION",
+    "id": 17,
+    "created_at": "2026-08-17T09:16:01.317867+00:00"
+  },
+  {
+    "incident_id": "CHAT-20260817-092533103",
+    "incident": "Payment API is returning HTTP 401",
+    "repository": "C:\\Users\\MANIKANDAN\\OneDrive\\Documents\\Desktop\\RCA\\apps\\demo-payment-service",
+    "service": "demo-payment-service",
+    "route": "/api/demo/payment",
+    "source_type": "chat",
+    "root_cause": "Expired credentials configured for the authentication dependency causing HTTP 401 errors",
+    "file_path": "demo-se/src/payment/payment_service.py",
+    "line_start": 63,
+    "line_end": 63,
+    "evidence": [
+      "Historical incidents consistently identify 'expired credentials were configured for the authentication dependency' as the root cause.",
+      "Repository finding in payment_service.py lines 63-65 explicitly raises PaymentFailure with message 'HTTP 401: Payment failed. Authentication dependency credentials are expired.'",
+      "Log file DEMO-20260816-C21B0138.json confirms the error message 'HTTP 401: Payment failed. Authentication dependency credentials are expired.'",
+      "The code at line 63-65 is the execution path that generates the specific error observed in the current incident."
+    ],
+    "suggested_fix": "Rotate and update the authentication credentials for the dependency service in the configuration/secrets management system. Verify the new credentials are valid and accessible by the Payment API service.",
+    "prevention": "Implement automated credential rotation and monitoring alerts for expiration dates. Add health checks that verify authentication token validity before processing payments. Ensure secrets are managed via a secure vault with automatic renewal capabilities.",
+    "confidence": 0.95,
+    "status": "PENDING_HUMAN_VALIDATION",
+    "id": 18,
+    "created_at": "2026-08-17T09:25:37.098927+00:00"
+  }
+]

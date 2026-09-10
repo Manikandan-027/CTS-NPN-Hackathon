@@ -1,0 +1,17 @@
+{
+    "incident_id": "DEMO-20260816-753F64C6",
+    "scenario_reference": "RCA-00372",
+    "service": "demo-payment-service",
+    "environment": "Production",
+    "route": "/api/demo/payment",
+    "repository": "apps/demo-payment-service",
+    "error_code": "HTTP 400",
+    "error_message": "HTTP 400: Payment request payload validation failed.",
+    "customer": "Demo Customer",
+    "amount": 4999.0,
+    "customer_query": "My payment failed",
+    "timestamp": "2026-08-16T13:36:12.376427+00:00",
+    "request_id": "REQ-321858CB7DEA",
+    "source": "demo-payment-service",
+    "status": "OPEN"
+}

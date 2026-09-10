@@ -1,0 +1,245 @@
+{
+  "input_file": "apps\\backend\\data\\raw\\complete_it_rca_dataset_8000_balanced.csv",
+  "output_file": "apps\\backend\\data\\processed\\processed_incidents.csv",
+  "initial_quality": {
+    "rows": 8000,
+    "columns": 14,
+    "missing_values_by_column": {
+      "incident_id": 0,
+      "incident_description": 0,
+      "category": 0,
+      "severity": 0,
+      "priority": 0,
+      "affected_service": 0,
+      "environment": 0,
+      "root_cause": 0,
+      "resolution": 0,
+      "preventive_action": 0,
+      "timestamp": 0,
+      "status": 0,
+      "source_type": 0,
+      "dataset_features": 0
+    },
+    "exact_duplicate_rows": 0,
+    "duplicate_incident_ids": 0,
+    "unique_categories": 16,
+    "category_counts": {
+      "Data / Data Pipeline": 500,
+      "Business Process / Configuration": 500,
+      "Capacity / Performance Management": 500,
+      "External Dependencies": 500,
+      "API / Microservices": 500,
+      "User / Customer Incident": 500,
+      "Business Continuity / Disaster Recovery": 500,
+      "Human / Operational": 500,
+      "Network": 500,
+      "Database": 500,
+      "Security": 500,
+      "Application / Software": 500,
+      "Deployment / Change Management": 500,
+      "Testing / Quality": 500,
+      "Monitoring / Observability": 500,
+      "Infrastructure": 500
+    }
+  },
+  "dataset_features": {
+    "records_with_empty_or_invalid_dataset_features": 0,
+    "unique_feature_keys": 53,
+    "feature_keys": [
+      "affected_records_or_requests",
+      "affected_service",
+      "alert_delay_seconds",
+      "authentication_failures",
+      "backup_age_hours",
+      "bandwidth_utilization_percent",
+      "blocked_requests",
+      "category",
+      "change_event",
+      "coverage_percent",
+      "db_connections",
+      "db_cpu_percent",
+      "disk_utilization_percent",
+      "dns_response_ms",
+      "environment_match",
+      "error_rate_after_change_percent",
+      "error_rate_before_change_percent",
+      "error_rate_percent",
+      "incident_duration_minutes",
+      "issue_type",
+      "lock_waits",
+      "metric_collection_status",
+      "minutes_after_change",
+      "missing_signal_percent",
+      "network_latency_ms",
+      "node_health",
+      "normal_workload_multiplier",
+      "observed_cpu_percent",
+      "observed_memory_percent",
+      "packet_loss_percent",
+      "peak_cpu_percent",
+      "peak_memory_percent",
+      "pending_workloads",
+      "pipeline_delay_minutes",
+      "pod_restart_count",
+      "query_latency_ms",
+      "queue_depth",
+      "records_affected",
+      "records_processed",
+      "recovery_test_status",
+      "replication_lag_seconds",
+      "request_latency_ms",
+      "resource_utilization_percent",
+      "retry_count",
+      "rpo_minutes",
+      "rto_minutes",
+      "schema_check",
+      "security_event_count",
+      "suspicious_requests",
+      "telemetry_events",
+      "tests_executed",
+      "tests_failed",
+      "validation_failure_rate_percent"
+    ]
+  },
+  "timestamps": {
+    "invalid_timestamps": 0,
+    "min_timestamp": "2024-01-01T05:34:44",
+    "max_timestamp": "2026-06-19T15:33:58"
+  },
+  "numeric_features": {
+    "numeric_feature_count": 44,
+    "range_checks": {
+      "bandwidth_utilization_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "coverage_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "db_cpu_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "disk_utilization_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "error_rate_after_change_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "error_rate_before_change_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "error_rate_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "missing_signal_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "observed_cpu_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "observed_memory_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "packet_loss_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "peak_cpu_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "peak_memory_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "resource_utilization_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      },
+      "validation_failure_rate_percent": {
+        "expected_range": [
+          0,
+          100
+        ],
+        "invalid_count": 0
+      }
+    }
+  },
+  "final_validation": {
+    "output_rows": 8000,
+    "missing_required_output_columns": [],
+    "empty_embedding_text": 0,
+    "unique_incident_ids": 8000,
+    "unique_categories": 16,
+    "category_counts": {
+      "Data / Data Pipeline": 500,
+      "Business Process / Configuration": 500,
+      "Capacity / Performance Management": 500,
+      "External Dependencies": 500,
+      "API / Microservices": 500,
+      "User / Customer Incident": 500,
+      "Business Continuity / Disaster Recovery": 500,
+      "Human / Operational": 500,
+      "Network": 500,
+      "Database": 500,
+      "Security": 500,
+      "Application / Software": 500,
+      "Deployment / Change Management": 500,
+      "Testing / Quality": 500,
+      "Monitoring / Observability": 500,
+      "Infrastructure": 500
+    },
+    "valid": true
+  }
+}
